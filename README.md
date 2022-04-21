@@ -1,2 +1,2 @@
 # UniHacker
-Patch most Unity versions and Unity Hub
+Patch all versions of Unity and Hub
