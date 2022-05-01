@@ -1,13 +1,19 @@
 # UniHacker
 Patch all versions of Unity3D and UnityHub. **ONLY SUPPORT WINDOWS.**
 
-## Supported Versions
+## Supported Unity Versions
 
 |     2022.1.0b7     |       2021.x       |       2020.x       |       2019.x       |       2018.x       |       2017.x       |
 | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: |
 | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 |        5.x         |        4.x         |      |      |      |      |
+| :----------------: | :----------------: | ---- | ---- | ---- | ---- |
+| :white_check_mark: | :white_check_mark: |      |      |      |      |
+
+## Supported UnityHub Versions
+
+|        3.x         |        2.x         |      |      |      |      |
 | :----------------: | :----------------: | ---- | ---- | ---- | ---- |
 | :white_check_mark: | :white_check_mark: |      |      |      |      |
 
