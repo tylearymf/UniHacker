@@ -143,6 +143,9 @@ If patch fails, please submit unity.exe binary file or Unity Hub version number 
   <data name="process_occupy" xml:space="preserve">
     <value>{0} is running and the patch may fail!</value>
   </data>
+  <data name="Special" xml:space="preserve">
+    <value>NotSupport Patch</value>
+  </data>
   <data name="status" xml:space="preserve">
     <value>Status:</value>
   </data>

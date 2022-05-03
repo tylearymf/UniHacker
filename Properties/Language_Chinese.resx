@@ -143,6 +143,9 @@
   <data name="process_occupy" xml:space="preserve">
     <value>{0} 正在运行中，可能会破解失败！</value>
   </data>
+  <data name="Special" xml:space="preserve">
+    <value>国内特供版不支持破解</value>
+  </data>
   <data name="status" xml:space="preserve">
     <value>文件状态：</value>
   </data>

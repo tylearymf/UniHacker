@@ -135,6 +135,15 @@ namespace UniHacker.Properties {
         }
         
         /// <summary>
+        ///   查找类似 国内特供版不支持破解 的本地化字符串。
+        /// </summary>
+        internal static string Special {
+            get {
+                return ResourceManager.GetString("Special", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 文件状态： 的本地化字符串。
         /// </summary>
         internal static string status {

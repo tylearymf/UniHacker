@@ -1,21 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace UniHacker
 {
     internal class UnityPatchInfos
     {
-        static byte[] ToArray(params byte[] bytes)
+        public static byte[] ToArray(params byte[] bytes)
         {
             return bytes;
         }
 
-        static List<byte[]> ToBytes(params byte[] bytes)
+        public static byte[] ToArray(string byteStr)
+        {
+            if (string.IsNullOrEmpty(byteStr))
+                return new byte[0];
+
+            return byteStr.Split(' ').ToList().ConvertAll(x => Convert.ToByte(x, 16)).ToArray();
+        }
+
+        public static List<byte[]> ToBytes(params byte[] bytes)
         {
             return new List<byte[]>() { bytes };
         }
 
-        static List<byte[]> ToBytes(byte[] bytes1, byte[] bytes2)
+        public static List<byte[]> ToBytes(byte[] bytes1, byte[] bytes2)
         {
             return new List<byte[]>() { bytes1, bytes2 };
         }
@@ -157,11 +166,12 @@ namespace UniHacker
             },
             new UnityPatchInfo
             {
-                Version = "2022.1.0b7",
-                LightPattern = ToBytes(ToArray(0x33, 0xFF, 0x40, 0x84, 0xF6, 0x0F, 0x84, 0xA4), ToArray(0xF0, 0x99, 0x3B, 0xFE, 0x90, 0x0F, 0xB6, 0xC3)),
-                DarkPattern = ToBytes(ToArray(0x33, 0xFF, 0x40, 0x84, 0xF6, 0x0F, 0x85, 0xA4), ToArray(0xF0, 0x99, 0x3B, 0xFE, 0x90, 0xB0, 0x01, 0x90)),
-            },
+                Version = "2022.1.0b",
+                LightPattern = ToBytes(ToArray("75 14 B8 02 00 00 00 E9 66 04 00"), ToArray("0F 84 A4 00 00 00 C7 44 24 20 25 00")),
+                DarkPattern = ToBytes(ToArray("74 14 B8 02 00 00 00 E9 66 04 00"), ToArray("E9 A5 00 00 00 00 C7 44 24 20 25 00")),
+            }
         };
+
 
         public static UnityPatchInfo FindPatchInfo(string version, ArchitectureType architectureType)
         {
@@ -190,6 +200,35 @@ namespace UniHacker
         public bool IsValid()
         {
             return Architecture != ArchitectureType.UnKnown && DarkPattern != null && LightPattern != null;
+        }
+    }
+
+    internal class MultiVersionPatchInfo
+    {
+        public List<string> Versions { set; get; }
+
+        public ArchitectureType Architecture { get; set; } = ArchitectureType.AMD64;
+
+        public List<byte[]> DarkPattern { get; set; }
+
+        public List<byte[]> LightPattern { get; set; }
+
+
+        public List<UnityPatchInfo> ToArray()
+        {
+            var infos = new List<UnityPatchInfo>(Versions.Count);
+            foreach (var ver in Versions)
+            {
+                infos.Add(new UnityPatchInfo()
+                {
+                    Version = ver,
+                    Architecture = Architecture,
+                    LightPattern = LightPattern,
+                    DarkPattern = DarkPattern,
+                });
+            }
+
+            return infos;
         }
     }
 }

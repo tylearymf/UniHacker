@@ -6,5 +6,6 @@
         Support,
         NotSupport,
         Patched,
+        Special,
     }
 }

@@ -135,6 +135,15 @@ namespace UniHacker.Properties {
         }
         
         /// <summary>
+        ///   查找类似 NotSupport Patch 的本地化字符串。
+        /// </summary>
+        internal static string Special {
+            get {
+                return ResourceManager.GetString("Special", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Status: 的本地化字符串。
         /// </summary>
         internal static string status {

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace UniHacker
@@ -33,6 +34,12 @@ namespace UniHacker
                 {
                     patchIndexes = lightIndexes;
                     PatchStatus = PatchStatus.Support;
+                }
+
+                if (PatchStatus == PatchStatus.NotSupport)
+                {
+                    if (Regex.IsMatch(FileVersion, @"\d+\.\d+.\d+f\d+c\d+(.*)?"))
+                        PatchStatus = PatchStatus.Special;
                 }
             }
         }
