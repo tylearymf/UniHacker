@@ -17,8 +17,9 @@ namespace UniHacker
 
         void InitComponents()
         {
-            var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-            Text = $"UniHacker - Unity3D & UnityHub Patcher by tylearymf v{version.Major}.{version.Minor}";
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            var version = FileVersionInfo.GetVersionInfo(assembly.Location);
+            Text = $"UniHacker - Unity3D & UnityHub Patcher by tylearymf v{version.FileVersion}";
 
             label1.Text = Language.GetString("tips");
             label2.Text = Language.GetString("version");

@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Windows.Forms;
 
 namespace UniHacker
 {
@@ -13,18 +15,25 @@ namespace UniHacker
     {
         public static ArchitectureType GetArchitectureType(string fileName)
         {
-            using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
-            using (var reader = new BinaryReader(fs))
+            try
             {
-                // 从开头跳到PE头的长度计算位置
-                fs.Seek(60, SeekOrigin.Begin);
+                using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+                using (var reader = new BinaryReader(fs))
+                {
+                    // 从开头跳到PE头的长度计算位置
+                    fs.Seek(60, SeekOrigin.Begin);
 
-                // 从开头跳到PE头
-                var offset = reader.ReadInt32();
-                fs.Seek(offset, SeekOrigin.Begin);
+                    // 从开头跳到PE头
+                    var offset = reader.ReadInt32();
+                    fs.Seek(offset, SeekOrigin.Begin);
 
-                var peHead = reader.ReadUInt32();
-                return peHead != 0x4550 ? ArchitectureType.UnKnown : (ArchitectureType)reader.ReadUInt16();
+                    var peHead = reader.ReadUInt32();
+                    return peHead != 0x4550 ? ArchitectureType.UnKnown : (ArchitectureType)reader.ReadUInt16();
+                }
+            }
+            catch
+            {
+                return ArchitectureType.UnKnown;
             }
         }
     }

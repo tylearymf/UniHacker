@@ -25,6 +25,9 @@ namespace UniHacker
 
         public Patcher(string filePath)
         {
+            // 修改权限
+            PermissionSet.TrySetAccess(filePath);
+
             FilePath = filePath;
             RootPath = Path.GetDirectoryName(filePath);
             ArchitectureType = MachineArchitecture.GetArchitectureType(filePath);

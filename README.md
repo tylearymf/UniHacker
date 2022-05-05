@@ -1,5 +1,5 @@
 # UniHacker
-Patch all versions of Unity3D and UnityHub. **ONLY SUPPORT WINDOWS.**
+Patch all versions of Unity3D and UnityHub. **For now, it's Windows only, Mac will be supported in the future.**
 
 ## Supported Unity Versions
 

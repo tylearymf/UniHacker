@@ -12,6 +12,9 @@ namespace UniHacker
         {
             PatchStatus = PatchStatus.NotSupport;
 
+            // 修改文件权限
+            PermissionSet.TrySetAccess(Path.Combine(RootPath, "resources/app.asar"));
+
             var fileVersion = FileVersion;
             if (fileVersion.StartsWith("2."))
             {
