@@ -6,6 +6,9 @@ namespace UniHacker
     {
         public static Patcher GetPatcher(string filePath)
         {
+            if (!File.Exists(filePath))
+                return null;
+
             var fileName = Path.GetFileName(filePath);
             switch (fileName)
             {

@@ -253,7 +253,6 @@
     <Compile Include="Patcher\Misc\MachineArchitecture.cs" />
     <Compile Include="Patcher\Misc\Patcher.cs" />
     <Compile Include="Patcher\Misc\PatchStatus.cs" />
-    <Compile Include="Patcher\Misc\PermissionSet.cs" />
     <Compile Include="Patcher\PatcherManager.cs" />
     <Compile Include="Patcher\Unity\LicensingInfo.cs" />
     <Compile Include="Patcher\Unity\UnityPatcher.cs" />
@@ -333,6 +332,7 @@
   </Target>
   <Import Project="packages\Costura.Fody.5.7.0\build\Costura.Fody.targets" Condition="Exists('packages\Costura.Fody.5.7.0\build\Costura.Fody.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(TargetPath)" "$(ProjectDir)\publish\$(ConfigurationName)\$(TargetFileName)"</PostBuildEvent>
+    <PostBuildEvent>mkdir "$(ProjectDir)\publish\$(ConfigurationName)"
+copy /Y "$(TargetPath)" "$(ProjectDir)\publish\$(ConfigurationName)\$(TargetFileName)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

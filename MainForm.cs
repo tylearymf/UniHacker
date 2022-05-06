@@ -26,6 +26,7 @@ namespace UniHacker
             label3.Text = Language.GetString("status");
             richTextBox1.Text = Language.GetString("description");
             button1.Text = Language.GetString("patch_btn");
+            button2.Text = Language.GetString("select");
 
             var len = richTextBox1.Text.Length;
             var url = "https://www.github.com/tylearymf/UniHacker";
@@ -55,12 +56,16 @@ namespace UniHacker
         void MainForm_DragDrop(object sender, DragEventArgs e)
         {
             var filePath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
-            textBox_filePath.Text = filePath;
+            UpdateFilePath(filePath);
+        }
 
+        void UpdateFilePath(string filePath)
+        {
             patcher = PatcherManager.GetPatcher(filePath);
-            var status = patcher.PatchStatus;
+            var status = patcher?.PatchStatus ?? PatchStatus.Unknown;
 
-            textBox_fileVer.Text = patcher.FileVersion;
+            textBox_filePath.Text = filePath;
+            textBox_fileVer.Text = patcher?.FileVersion ?? string.Empty;
             textBox_fileStatus.Text = Language.GetString(status.ToString());
             button1.Enabled = status == PatchStatus.Support;
         }
@@ -81,6 +86,18 @@ namespace UniHacker
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+            }
+        }
+
+        void button2_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new OpenFileDialog())
+            {
+                dialog.Filter = "Unity.exe ‖ Unity Hub.exe|*.exe";
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    UpdateFilePath(dialog.FileName);
+                }
             }
         }
     }

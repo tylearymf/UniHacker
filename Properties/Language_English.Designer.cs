@@ -135,6 +135,15 @@ namespace UniHacker.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Select 的本地化字符串。
+        /// </summary>
+        internal static string select {
+            get {
+                return ResourceManager.GetString("select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 NotSupport Patch 的本地化字符串。
         /// </summary>
         internal static string Special {
@@ -162,7 +171,7 @@ namespace UniHacker.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Drag Unity.exe or Unity Hub.exe to the window 的本地化字符串。
+        ///   查找类似 Please select Unity.exe or Unity Hub.exe 的本地化字符串。
         /// </summary>
         internal static string tips {
             get {

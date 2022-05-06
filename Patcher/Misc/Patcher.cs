@@ -25,9 +25,6 @@ namespace UniHacker
 
         public Patcher(string filePath)
         {
-            // 修改权限
-            PermissionSet.TrySetAccess(filePath);
-
             FilePath = filePath;
             RootPath = Path.GetDirectoryName(filePath);
             ArchitectureType = MachineArchitecture.GetArchitectureType(filePath);
@@ -39,10 +36,13 @@ namespace UniHacker
 
             PatchStatus = PatchStatus.Unknown;
 
-            var fileName = Path.GetFileNameWithoutExtension(filePath);
-            var processes = Process.GetProcessesByName(fileName);
-            if (processes.Length > 0)
-                MessageBox.Show(Language.GetString("process_occupy", fileName));
+            if (!(this is DefaultPatcher))
+            {
+                var fileName = Path.GetFileNameWithoutExtension(filePath);
+                var processes = Process.GetProcessesByName(fileName);
+                if (processes.Length > 0)
+                    MessageBox.Show(Language.GetString("process_occupy", fileName));
+            }
         }
 
         public virtual async Task<(bool success, string errorMsg)> ApplyPatch(Action<double> progress)

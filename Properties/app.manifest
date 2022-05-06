@@ -16,7 +16,7 @@
             如果你的应用程序需要此虚拟化来实现向后兼容性，则移除此
             元素。
         -->
-        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel level="requireAdministrator" uiAccess="false" />
       </requestedPrivileges>
       <applicationRequestMinimum>
         <defaultAssemblyRequest permissionSetReference="Custom" />
@@ -47,14 +47,14 @@
        在其 app.config 中将 "EnableWindowsFormsHighDpiAutoResizing" 设置设置为 "true"。
        
        将应用程序设为感知长路径。请参阅 https://docs.microsoft.com/windows/win32/fileio/maximum-file-path-limitation -->
-  <!--
+  
   <application xmlns="urn:schemas-microsoft-com:asm.v3">
     <windowsSettings>
       <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true</dpiAware>
       <longPathAware xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">true</longPathAware>
     </windowsSettings>
   </application>
-  -->
+  
   <!-- 启用 Windows 公共控件和对话框的主题(Windows XP 和更高版本) -->
   <!--
   <dependency>

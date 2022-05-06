@@ -135,6 +135,15 @@ namespace UniHacker.Properties {
         }
         
         /// <summary>
+        ///   查找类似 选择 的本地化字符串。
+        /// </summary>
+        internal static string select {
+            get {
+                return ResourceManager.GetString("select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 国内特供版不支持破解 的本地化字符串。
         /// </summary>
         internal static string Special {
@@ -162,7 +171,7 @@ namespace UniHacker.Properties {
         }
         
         /// <summary>
-        ///   查找类似 拖拽 Unity.exe 或 Unity Hub.exe 到该窗口中 的本地化字符串。
+        ///   查找类似 请选择 Unity.exe 或 Unity Hub.exe 的本地化字符串。
         /// </summary>
         internal static string tips {
             get {

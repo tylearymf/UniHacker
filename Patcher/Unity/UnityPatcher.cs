@@ -9,18 +9,13 @@ namespace UniHacker
 {
     internal class UnityPatcher : Patcher
     {
-        UnityPatchInfo patchInfo;
         byte[] fileBytes;
         List<int> patchIndexes;
-        string licensingFilePath;
+        UnityPatchInfo patchInfo;
 
         public UnityPatcher(string filePath) : base(filePath)
         {
             PatchStatus = PatchStatus.NotSupport;
-            licensingFilePath = Path.Combine(RootPath, @"Data\Resources\Licensing\Client\Unity.Licensing.Client.exe");
-
-            // 修改文件权限
-            PermissionSet.TrySetAccess(licensingFilePath);
 
             patchInfo = UnityPatchInfos.FindPatchInfo(FileVersion, ArchitectureType);
             if (patchInfo?.IsValid() ?? false)
@@ -72,6 +67,7 @@ namespace UniHacker
                 using (var sw = File.OpenWrite(FilePath))
                     sw.Write(fileBytes, 0, fileBytes.Length);
 
+                var licensingFilePath = Path.Combine(RootPath, @"Data\Resources\Licensing\Client\Unity.Licensing.Client.exe");
                 if (File.Exists(licensingFilePath))
                     File.Move(licensingFilePath, licensingFilePath + ".bak");
 
