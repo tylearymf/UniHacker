@@ -161,8 +161,8 @@ namespace UniHacker
             new UnityPatchInfo
             {
                 Version = "2021.3",
-                LightPattern = ToBytes(0x75, 0x14, 0xB8, 0x02, 0x00, 0x00, 0x00, 0xE9, 0x66),
-                DarkPattern = ToBytes(0xEB, 0x14, 0xB8, 0x02, 0x00, 0x00, 0x00, 0xE9, 0x66),
+                LightPattern = ToBytes(ToArray("74 19 48 8D 0D C0 82 3F 01"), ToArray("75 14 B8 02 00 00 00 E9 66")),
+                DarkPattern = ToBytes(ToArray("EB 19 48 8D 0D C0 82 3F 01"), ToArray("74 14 B8 02 00 00 00 E9 66")),
             },
             new UnityPatchInfo
             {
@@ -171,6 +171,17 @@ namespace UniHacker
                 DarkPattern = ToBytes(ToArray("74 14 B8 02 00 00 00 E9 66 04 00"), ToArray("E9 A5 00 00 00 00 C7 44 24 20 25 00")),
             }
         };
+
+        static UnityPatchInfos()
+        {
+            var patchInfos = WindowsPatches;
+            patchInfos.AddRange(new MultiVersionPatchInfo()
+            {
+                Versions = new List<string> { "2021.3.0f1", "2021.3.1f1" },
+                LightPattern = ToBytes(0x75, 0x14, 0xB8, 0x02, 0x00, 0x00, 0x00, 0xE9, 0x66),
+                DarkPattern = ToBytes(0xEB, 0x14, 0xB8, 0x02, 0x00, 0x00, 0x00, 0xE9, 0x66),
+            }.ToArray());
+        }
 
 
         public static UnityPatchInfo FindPatchInfo(string version, ArchitectureType architectureType)
