@@ -148,6 +148,12 @@ namespace UniHacker
             },
             new UnityPatchInfo
             {
+                Version = "2020.3.34",
+                LightPattern = ToBytes(ToArray("74 28 48 8D 0D 9D 50 88 01"), ToArray("75 16 B8 02 00 00 00 E9 EA")),
+                DarkPattern = ToBytes(ToArray("EB 28 48 8D 0D 9D 50 88 01"), ToArray("EB 16 B8 02 00 00 00 E9 EA")),
+            },
+            new UnityPatchInfo
+            {
                 Version = "2021.1",
                 LightPattern = ToBytes(0x75, 0x14, 0xB8, 0x02, 0x00, 0x00, 0x00, 0xE9, 0x33),
                 DarkPattern = ToBytes(0xEB, 0x14, 0xB8, 0x02, 0x00, 0x00, 0x00, 0xE9, 0x33),
@@ -169,7 +175,13 @@ namespace UniHacker
                 Version = "2022.1.0b",
                 LightPattern = ToBytes(ToArray("75 14 B8 02 00 00 00 E9 66 04 00"), ToArray("0F 84 A4 00 00 00 C7 44 24 20 25 00")),
                 DarkPattern = ToBytes(ToArray("74 14 B8 02 00 00 00 E9 66 04 00"), ToArray("E9 A5 00 00 00 00 C7 44 24 20 25 00")),
-            }
+            },
+            new UnityPatchInfo
+            {
+                Version = "2022.1",
+                LightPattern = ToBytes(ToArray("0F 84 A4 00 00 00 C7 44 24 20 25"), ToArray("75 14 B8 02 00 00 00 E9 66")),
+                DarkPattern = ToBytes(ToArray("E9 A5 00 00 00 00 C7 44 24 20 25"), ToArray("74 14 B8 02 00 00 00 E9 66")),
+            },
         };
 
         static UnityPatchInfos()
@@ -177,7 +189,7 @@ namespace UniHacker
             var patchInfos = WindowsPatches;
             patchInfos.AddRange(new MultiVersionPatchInfo()
             {
-                Versions = new List<string> { "2021.3.0f1", "2021.3.1f1" },
+                Versions = new List<string> { "2021.3.0", "2021.3.1" },
                 LightPattern = ToBytes(0x75, 0x14, 0xB8, 0x02, 0x00, 0x00, 0x00, 0xE9, 0x66),
                 DarkPattern = ToBytes(0xEB, 0x14, 0xB8, 0x02, 0x00, 0x00, 0x00, 0xE9, 0x66),
             }.ToArray());

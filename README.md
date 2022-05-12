@@ -3,7 +3,7 @@ Patch all versions of Unity3D and UnityHub. **For now, it's Windows only, Mac wi
 
 ## Supported Unity Versions
 
-|    2022.1.0Beta    |       2021.x       |       2020.x       |       2019.x       |       2018.x       |       2017.x       |
+|       2022.1       |       2021.x       |       2020.x       |       2019.x       |       2018.x       |       2017.x       |
 | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: |
 | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
