@@ -1,0 +1,20 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:UniHacker"
+             x:Class="UniHacker.App">
+  <Application.DataTemplates>
+    <local:ViewLocator/>
+  </Application.DataTemplates>
+
+  <Application.Name>UniHacker</Application.Name>
+
+  <NativeMenu.Menu>
+    <NativeMenu>
+      <NativeMenuItem Header="About"/>
+    </NativeMenu>
+  </NativeMenu.Menu>
+
+  <Application.Styles>
+    <FluentTheme Mode="Light"/>
+  </Application.Styles>
+</Application>

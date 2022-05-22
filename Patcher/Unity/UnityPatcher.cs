@@ -4,14 +4,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Mono.Unix;
 
 namespace UniHacker
 {
+#pragma warning disable CS8618
     internal class UnityPatcher : Patcher
     {
-        byte[] fileBytes;
-        List<int> patchIndexes;
-        UnityPatchInfo patchInfo;
+        readonly byte[] fileBytes;
+        readonly List<int> patchIndexes;
+        readonly UnityPatchInfo patchInfo;
 
         public UnityPatcher(string filePath) : base(filePath)
         {
@@ -52,7 +54,29 @@ namespace UniHacker
                 var bakPath = FilePath + ".bak";
                 if (File.Exists(bakPath))
                     File.Delete(bakPath);
-                File.WriteAllBytes(bakPath, fileBytes);
+                await File.WriteAllBytesAsync(bakPath, fileBytes);
+
+                if (PlatformUtils.IsOSX())
+                {
+                    // chmod +x
+                    _ = new UnixFileInfo(bakPath)
+                    {
+                        FileAccessPermissions = FileAccessPermissions.UserExecute |
+                                                         FileAccessPermissions.OtherExecute |
+                                                         FileAccessPermissions.GroupExecute
+                    };
+                }
+                else if (PlatformUtils.IsLinux())
+                {
+                    _ = new UnixFileInfo(bakPath)
+                    {
+                        FileAccessPermissions = FileAccessPermissions.UserReadWriteExecute |
+                                                         FileAccessPermissions.OtherRead |
+                                                         FileAccessPermissions.OtherExecute |
+                                                         FileAccessPermissions.OtherRead |
+                                                         FileAccessPermissions.OtherExecute
+                    };
+                }
 
                 // 写入文件流
                 for (var i = 0; i < patchInfo.DarkPattern.Count; i++)
@@ -67,9 +91,12 @@ namespace UniHacker
                 using (var sw = File.OpenWrite(FilePath))
                     sw.Write(fileBytes, 0, fileBytes.Length);
 
-                var licensingFilePath = Path.Combine(RootPath, @"Data\Resources\Licensing\Client\Unity.Licensing.Client.exe");
-                if (File.Exists(licensingFilePath))
-                    File.Move(licensingFilePath, licensingFilePath + ".bak");
+                if (PlatformUtils.IsWindows())
+                {
+                    var licensingFilePath = Path.Combine(RootPath, @"Data\Resources\Licensing\Client\Unity.Licensing.Client" + PlatformUtils.GetExtension());
+                    if (File.Exists(licensingFilePath))
+                        File.Move(licensingFilePath, licensingFilePath + ".bak");
+                }
 
                 // 创建许可证
                 LicensingInfo.TryGenerate(MajorVersion, MinorVersion);
@@ -80,4 +107,5 @@ namespace UniHacker
             return (false, string.Empty);
         }
     }
+#pragma warning restore CS8618
 }

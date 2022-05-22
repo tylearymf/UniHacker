@@ -11,7 +11,8 @@ namespace UniHacker
 
         public override async Task<(bool success, string errorMsg)> ApplyPatch(Action<double> progress)
         {
-            return (false, Language.GetString("non_unity"));
+            await Task.Yield();
+            return (false, Language.GetString("Non_unity"));
         }
     }
 }

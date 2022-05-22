@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace UniHacker.Properties {
+namespace UniHacker.Assets {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace UniHacker.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Language_English {
+    internal class Language_Chinese {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Language_English() {
+        internal Language_Chinese() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace UniHacker.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UniHacker.Properties.Language_English", typeof(Language_English).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UniHacker.Assets.Language_Chinese", typeof(Language_Chinese).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,27 +61,27 @@ namespace UniHacker.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Patch all versions of Unity and UnityHub.  
-        /// 
-        ///If patch fails, please submit unity.exe binary file or Unity Hub version number on Github issue.   的本地化字符串。
+        ///   查找类似 破解所有版本的Unity和UnityHub.
+        ///
+        ///如果破解失败，请在Github issue中提交Unity文件或UnityHub的版本号. 的本地化字符串。
         /// </summary>
-        internal static string description {
+        internal static string Description {
             get {
-                return ResourceManager.GetString("description", resourceCulture);
+                return ResourceManager.GetString("Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 This application is not Unity.exe or Unity Hub.exe 的本地化字符串。
+        ///   查找类似 该程序不是Unity或Unity Hub 的本地化字符串。
         /// </summary>
-        internal static string non_unity {
+        internal static string Non_unity {
             get {
-                return ResourceManager.GetString("non_unity", resourceCulture);
+                return ResourceManager.GetString("Non_unity", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 NotSupport Patch 的本地化字符串。
+        ///   查找类似 不支持破解 的本地化字符串。
         /// </summary>
         internal static string NotSupport {
             get {
@@ -90,34 +90,34 @@ namespace UniHacker.Properties {
         }
         
         /// <summary>
-        ///   查找类似 PATCH 的本地化字符串。
+        ///   查找类似 破 解 的本地化字符串。
         /// </summary>
-        internal static string patch_btn {
+        internal static string Patch_btn {
             get {
-                return ResourceManager.GetString("patch_btn", resourceCulture);
+                return ResourceManager.GetString("Patch_btn", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Patch failed! 的本地化字符串。
+        ///   查找类似 破解失败，请按描述提交该问题！ 的本地化字符串。
         /// </summary>
-        internal static string patch_fail {
+        internal static string Patch_fail {
             get {
-                return ResourceManager.GetString("patch_fail", resourceCulture);
+                return ResourceManager.GetString("Patch_fail", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Successfully patched! 的本地化字符串。
+        ///   查找类似 破解成功！ 的本地化字符串。
         /// </summary>
-        internal static string patch_success {
+        internal static string Patch_success {
             get {
-                return ResourceManager.GetString("patch_success", resourceCulture);
+                return ResourceManager.GetString("Patch_success", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Has been patched 的本地化字符串。
+        ///   查找类似 已破解 的本地化字符串。
         /// </summary>
         internal static string Patched {
             get {
@@ -126,25 +126,34 @@ namespace UniHacker.Properties {
         }
         
         /// <summary>
-        ///   查找类似 {0} is running and the patch may fail! 的本地化字符串。
+        ///   查找类似 {0} 正在运行中，可能会破解失败！ 的本地化字符串。
         /// </summary>
-        internal static string process_occupy {
+        internal static string Process_occupy {
             get {
-                return ResourceManager.GetString("process_occupy", resourceCulture);
+                return ResourceManager.GetString("Process_occupy", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Select 的本地化字符串。
+        ///   查找类似 选择 的本地化字符串。
         /// </summary>
-        internal static string select {
+        internal static string Select {
             get {
-                return ResourceManager.GetString("select", resourceCulture);
+                return ResourceManager.GetString("Select", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 NotSupport Patch 的本地化字符串。
+        ///   查找类似 请选择 Unity 或 Unity Hub. 的本地化字符串。
+        /// </summary>
+        internal static string SelectTips {
+            get {
+                return ResourceManager.GetString("SelectTips", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 国内特供版不支持破解 的本地化字符串。
         /// </summary>
         internal static string Special {
             get {
@@ -153,16 +162,16 @@ namespace UniHacker.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Status: 的本地化字符串。
+        ///   查找类似 文件状态： 的本地化字符串。
         /// </summary>
-        internal static string status {
+        internal static string Status {
             get {
-                return ResourceManager.GetString("status", resourceCulture);
+                return ResourceManager.GetString("Status", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Support Patch 的本地化字符串。
+        ///   查找类似 支持破解 的本地化字符串。
         /// </summary>
         internal static string Support {
             get {
@@ -171,16 +180,7 @@ namespace UniHacker.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Please select Unity.exe or Unity Hub.exe 的本地化字符串。
-        /// </summary>
-        internal static string tips {
-            get {
-                return ResourceManager.GetString("tips", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Unknown 的本地化字符串。
+        ///   查找类似 未知 的本地化字符串。
         /// </summary>
         internal static string Unknown {
             get {
@@ -189,11 +189,11 @@ namespace UniHacker.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Version: 的本地化字符串。
+        ///   查找类似 版本： 的本地化字符串。
         /// </summary>
-        internal static string version {
+        internal static string Version {
             get {
-                return ResourceManager.GetString("version", resourceCulture);
+                return ResourceManager.GetString("Version", resourceCulture);
             }
         }
     }

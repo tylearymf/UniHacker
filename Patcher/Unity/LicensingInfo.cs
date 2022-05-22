@@ -20,12 +20,36 @@ namespace UniHacker
             s_MajorVersion = majorVersion;
             s_MinorVersion = minorVersion;
 
-            var commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            var commonAppData = string.Empty;
+            switch (PlatformUtils.GetPlatformType())
+            {
+                case PlatformType.Windows:
+                    commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+                    break;
+                case PlatformType.MacOS:
+                    commonAppData = "/Library/Application Support";
+                    break;
+                case PlatformType.Linux:
+                    var directories = Directory.GetDirectories("/home");
+                    if (directories.Length > 0)
+                    {
+                        var tempName = Path.GetFileName(directories[0]);
+                        commonAppData = $"/home/{tempName}/.local/share/unity3d";
+                        if (!Directory.Exists(commonAppData))
+                            Directory.CreateDirectory(commonAppData);
+                    }
+                    else
+                    {
+                        throw new Exception("home directory is null");
+                    }
+                    break;
+            }
+
             var unityLicensingPath = Path.Combine(commonAppData, "Unity");
             if (!Directory.Exists(unityLicensingPath))
                 Directory.CreateDirectory(unityLicensingPath);
 
-            var ulfFilePath = string.Empty;
+            string? ulfFilePath;
             if (majorVersion == 4)
                 ulfFilePath = Path.Combine(unityLicensingPath, "Unity_v4.x.ulf");
             else if (majorVersion == 5)
@@ -90,7 +114,7 @@ namespace UniHacker
     [XmlRoot("root", Namespace = "", IsNullable = false)]
     public class LicensingXml
     {
-        public License License = new License();
+        public License License = new();
     }
 
     public class License
@@ -98,23 +122,23 @@ namespace UniHacker
         [XmlAttribute]
         public string id;
 
-        public XmlValue AlwaysOnline = new XmlValue();
-        public XmlValue ClientProvidedVersion = new XmlValue();
-        public XmlValue DeveloperData = new XmlValue();
+        public XmlValue AlwaysOnline = new();
+        public XmlValue ClientProvidedVersion = new();
+        public XmlValue DeveloperData = new();
 
         [XmlArray]
         [XmlArrayItem("Feature")]
         public XmlValue[] Features;
 
-        public XmlValue InitialActivationDate = new XmlValue();
-        public XmlValue LicenseVersion = new XmlValue();
-        public XmlEmpty MachineBindings = new XmlEmpty();
-        public XmlValue MachineID = new XmlValue();
-        public XmlValue SerialHash = new XmlValue();
-        public XmlValue SerialMasked = new XmlValue();
-        public XmlValue StartDate = new XmlValue();
-        public XmlValue StopDate = new XmlValue();
-        public XmlValue UpdateDate = new XmlValue();
+        public XmlValue InitialActivationDate = new();
+        public XmlValue LicenseVersion = new();
+        public XmlEmpty MachineBindings = new();
+        public XmlValue MachineID = new();
+        public XmlValue SerialHash = new();
+        public XmlValue SerialMasked = new();
+        public XmlValue StartDate = new();
+        public XmlValue StopDate = new();
+        public XmlValue UpdateDate = new();
 
         public License()
         {
@@ -140,18 +164,12 @@ namespace UniHacker
 
         public void SetVersion(int majorVersion)
         {
-            switch (majorVersion)
+            LicenseVersion.Value = majorVersion switch
             {
-                case 4:
-                    LicenseVersion.Value = "4.x";
-                    break;
-                case 5:
-                    LicenseVersion.Value = "5.x";
-                    break;
-                default:
-                    LicenseVersion.Value = "6.x";
-                    break;
-            }
+                4 => "4.x",
+                5 => "5.x",
+                _ => "6.x",
+            };
         }
 
         public void GenerateSerialNumber()
@@ -175,7 +193,7 @@ namespace UniHacker
             SerialMasked.Value = serialKey.Remove(serialKey.Length - 4, 4) + "XXXX";
         }
 
-        string RamdomString(Random random)
+        static string RamdomString(Random random)
         {
             var text = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             return text[random.Next(0, 36)].ToString() +

@@ -1,0 +1,61 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:AvalonEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:UniHacker.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Width="520" Height="250" MaxWidth="520" MaxHeight="250" CanResize="False"
+        x:Class="UniHacker.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico">
+
+  <Design.DataContext>
+    <vm:MainWindowViewModel/>
+  </Design.DataContext>
+
+  <Border BorderBrush="Gray" BorderThickness="2" Padding="10">
+    <Panel>
+      <TextBlock Text="{Binding SelectTips}" VerticalAlignment="Top"/>
+      <TextBox Name="FilePath"
+                 VerticalAlignment="Top"
+                 Margin="0,30,150,0"
+                 IsReadOnly="True"/>
+      <Button Name="SelectBtn"
+              Content="{Binding Select}"
+              HorizontalAlignment="Stretch"
+              VerticalContentAlignment="Center"
+              HorizontalContentAlignment="Center"
+              Margin="350,-85,0,50"/>
+      <TextBlock Text="{Binding Version}" VerticalAlignment="Top" Margin="0,70"/>
+      <TextBox Name="Version"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Margin="70,65,70,0"
+               Width="145"
+               IsReadOnly="True"/>
+      <TextBlock Text="{Binding Status}" VerticalAlignment="Top" Margin="170,70" HorizontalAlignment="Right" />
+      <TextBox Name="Status"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               Margin="350,65,0,0"
+               Width="145"
+               IsReadOnly="True"/>
+      <TextBox Name="RichText"
+               Text="{Binding Description}"
+               VerticalAlignment="Bottom"
+               Margin="0,-125,150,0"
+               TextWrapping="Wrap"
+               IsReadOnly="True"/>
+      <Button Name="PatchBtn"
+              Content="{Binding Patch_btn}"
+              VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Center"
+              VerticalContentAlignment="Center"
+              FontSize="30"
+              Margin="350,100,0,0" />
+      <ProgressBar Name="ProgressBar"
+                   VerticalAlignment="Bottom"
+                   Margin="-10,10,-10,-10"/>
+    </Panel>
+  </Border>
+</Window>

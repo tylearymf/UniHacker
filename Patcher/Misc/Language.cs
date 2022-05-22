@@ -10,37 +10,34 @@ namespace UniHacker
         public const string Chinese = "Chinese";
         public const string DefaultLanguage = English;
 
-        static ResourceManager s_ResourceManager;
+        static ResourceManager? s_ResourceManager;
 
         public static void Init()
         {
             var language = Thread.CurrentThread.CurrentCulture.Name;
             var languageFileName = string.Empty;
-            if (language == "zh-CN")
-                languageFileName = Language.Chinese;
-            else
-                languageFileName = Language.English;
+            var culture = default(CultureInfo);
 
-            CultureInfo culture = null;
-            switch (languageFileName)
+            if (language == "zh-CN")
             {
-                case Chinese:
-                    culture = new CultureInfo("zh-CN");
-                    break;
-                case English:
-                    culture = new CultureInfo("en-US");
-                    break;
+                culture = new CultureInfo("zh-CN");
+                languageFileName = Chinese;
+            }
+            else
+            {
+                culture = new CultureInfo("en-US");
+                languageFileName = English;
             }
 
             CultureInfo.DefaultThreadCurrentCulture = culture;
             CultureInfo.DefaultThreadCurrentUICulture = culture;
 
-            s_ResourceManager = new ResourceManager($"{nameof(UniHacker)}.Properties.Language_{languageFileName}", typeof(Language).Assembly);
+            s_ResourceManager = new ResourceManager($"{nameof(UniHacker)}.Assets.Language_{languageFileName}", typeof(Language).Assembly);
         }
 
         public static string GetString(string key, params string[] args)
         {
-            return string.Format(s_ResourceManager.GetString(key, Thread.CurrentThread.CurrentCulture) ?? string.Empty, args);
+            return string.Format(s_ResourceManager?.GetString(key, Thread.CurrentThread.CurrentCulture) ?? string.Empty, args);
         }
     }
 }

@@ -67,7 +67,9 @@ namespace asardotnetasync
             }
             catch (Exception _ex)
             {
+#pragma warning disable CA2200
                 throw _ex;
+#pragma warning restore CA2200
             }
         }
 

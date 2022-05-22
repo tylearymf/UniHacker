@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace UniHacker
 {
@@ -25,33 +24,40 @@ namespace UniHacker
 
         public Patcher(string filePath)
         {
-            FilePath = filePath;
-            RootPath = Path.GetDirectoryName(filePath);
-            ArchitectureType = MachineArchitecture.GetArchitectureType(filePath);
-
-            var info = FileVersionInfo.GetVersionInfo(filePath);
-            FileVersion = !string.IsNullOrEmpty(info.ProductVersion) ? info.ProductVersion.Split('_')[0] : Language.GetString(PatchStatus.Unknown.ToString());
-            MajorVersion = info.ProductMajorPart;
-            MinorVersion = info.ProductMinorPart;
-
-            PatchStatus = PatchStatus.Unknown;
-
-            if (!(this is DefaultPatcher))
+            var sourceFilePath = filePath;
+            var realFilePath = filePath;
+            var fileName = Path.GetFileNameWithoutExtension(filePath);
+            RootPath = Path.GetDirectoryName(sourceFilePath) ?? string.Empty;
+            switch (PlatformUtils.GetPlatformType())
             {
-                var fileName = Path.GetFileNameWithoutExtension(filePath);
+                case PlatformType.MacOS:
+                    var rootPath = Path.Combine(filePath, "Contents");
+                    realFilePath = Path.Combine(rootPath, $"MacOS/{fileName}");
+                    RootPath = rootPath;
+                    break;
+            }
+
+            FilePath = realFilePath;
+            (FileVersion, MajorVersion, MinorVersion) = PlatformUtils.GetFileVersionInfo(filePath);
+            ArchitectureType = MachineArchitecture.GetArchitectureType(realFilePath);
+            PatchStatus = PatchStatus.Unknown;
+            if (this is not DefaultPatcher)
+            {
                 var processes = Process.GetProcessesByName(fileName);
                 if (processes.Length > 0)
-                    MessageBox.Show(Language.GetString("process_occupy", fileName));
+                    MessageBox.Show(Language.GetString("Process_occupy", fileName));
             }
         }
 
         public virtual async Task<(bool success, string errorMsg)> ApplyPatch(Action<double> progress)
         {
+            await Task.Yield();
             throw new NotImplementedException();
         }
 
         public virtual async Task<(bool success, string errorMsg)> RemovePatch()
         {
+            await Task.Yield();
             throw new NotImplementedException();
         }
     }

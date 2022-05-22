@@ -29,28 +29,29 @@ namespace UniHacker
             unityHubPath = Path.Combine(unityHubPath, "resources");
             var exportFolder = Path.Combine(unityHubPath, "app");
             var asarPath = Path.Combine(unityHubPath, "app.asar");
+            var asarBackupPath = Path.Combine(unityHubPath, "app.asar.bak");
             var asarUnpackPath = Path.Combine(unityHubPath, "app.asar.unpacked");
 
             if (Directory.Exists(exportFolder))
                 Directory.Delete(exportFolder, true);
             Directory.CreateDirectory(exportFolder);
 
-            if (!File.Exists(asarPath) && File.Exists(asarPath + ".bak"))
-                File.Move(asarPath + ".bak", asarPath);
+            if (!File.Exists(asarPath) && File.Exists(asarBackupPath))
+                File.Move(asarBackupPath, asarPath);
 
             var archive = new AsarArchive(asarPath);
             var extractor = new AsarExtractor();
 
             extractor.FileExtracted += (sender, e) => progress(e.Progress);
-            await extractor.ExtractAll(archive, exportFolder + "/");
+            await extractor.ExtractAll(archive, exportFolder);
             await Task.Delay(200);
 
             // Newtonsoft 7.0以上的版本有BUG
-            var jsonVersion = typeof(Newtonsoft.Json.JsonConvert).Assembly.GetName().Version.Major;
+            var jsonVersion = typeof(Newtonsoft.Json.JsonConvert).Assembly.GetName().Version?.Major;
             if (jsonVersion > 7)
             {
-                if (File.Exists(exportFolder + "/filespackage.json"))
-                    File.Move(exportFolder + "/filespackage.json", exportFolder + "/package.json");
+                if (File.Exists(Path.Combine(exportFolder, "filespackage.json")))
+                    File.Move(Path.Combine(exportFolder, "filespackage.json"), Path.Combine(exportFolder, "package.json"));
             }
 
             var fileVersion = FileVersion;
@@ -70,8 +71,8 @@ namespace UniHacker
                 if (Directory.Exists(asarUnpackPath))
                     CopyDirectory(asarUnpackPath, exportFolder, true);
 
-                if (File.Exists(asarPath) && !File.Exists(asarPath + ".bak"))
-                    File.Move(asarPath, asarPath + ".bak");
+                if (File.Exists(asarPath) && !File.Exists(asarBackupPath))
+                    File.Move(asarPath, asarBackupPath);
             }
             else
             {

@@ -117,51 +117,59 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="description" xml:space="preserve">
-    <value>破解所有版本的Unity和UnityHub.
+  <data name="Description" xml:space="preserve">
+    <value>Patch all versions of Unity and UnityHub.  
+ 
+If patch fails, please submit Unity binary file or Unity Hub version number on Github issue.  
 
-如果破解失败，请在Github issue中提交Unity.exe文件或UnityHub的版本号.</value>
+https://www.github.com/tylearymf/UniHacker</value>
   </data>
-  <data name="non_unity" xml:space="preserve">
-    <value>该程序不是Unity.exe或Unity Hub.exe</value>
+  <data name="Non_Administrator" xml:space="preserve">
+    <value>Please run this program as an administrator.</value>
+  </data>
+  <data name="Non_unity" xml:space="preserve">
+    <value>This application is not Unity or Unity Hub</value>
+  </data>
+  <data name="NotExist" xml:space="preserve">
+    <value>File doest not exist:{0}</value>
   </data>
   <data name="NotSupport" xml:space="preserve">
-    <value>不支持破解</value>
+    <value>NotSupport Patch</value>
   </data>
   <data name="Patched" xml:space="preserve">
-    <value>已破解</value>
+    <value>Has been patched</value>
   </data>
-  <data name="patch_btn" xml:space="preserve">
-    <value>破 解</value>
+  <data name="Patch_btn" xml:space="preserve">
+    <value>PATCH</value>
   </data>
-  <data name="patch_fail" xml:space="preserve">
-    <value>破解失败，请按描述提交该问题！</value>
+  <data name="Patch_fail" xml:space="preserve">
+    <value>Patch failed!</value>
   </data>
-  <data name="patch_success" xml:space="preserve">
-    <value>破解成功！</value>
+  <data name="Patch_success" xml:space="preserve">
+    <value>Successfully patched!</value>
   </data>
-  <data name="process_occupy" xml:space="preserve">
-    <value>{0} 正在运行中，可能会破解失败！</value>
+  <data name="Process_occupy" xml:space="preserve">
+    <value>{0} is running and the patch may fail!</value>
   </data>
-  <data name="select" xml:space="preserve">
-    <value>选择</value>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="SelectTips" xml:space="preserve">
+    <value>Please select Unity or Unity Hub.</value>
   </data>
   <data name="Special" xml:space="preserve">
-    <value>国内特供版不支持破解</value>
+    <value>NotSupport Patch</value>
   </data>
-  <data name="status" xml:space="preserve">
-    <value>文件状态：</value>
+  <data name="Status" xml:space="preserve">
+    <value>Status:</value>
   </data>
   <data name="Support" xml:space="preserve">
-    <value>支持破解</value>
-  </data>
-  <data name="tips" xml:space="preserve">
-    <value>请选择 Unity.exe 或 Unity Hub.exe</value>
+    <value>Support Patch</value>
   </data>
   <data name="Unknown" xml:space="preserve">
-    <value>未知</value>
+    <value>Unknown</value>
   </data>
-  <data name="version" xml:space="preserve">
-    <value>版本：</value>
+  <data name="Version" xml:space="preserve">
+    <value>Version:</value>
   </data>
 </root>

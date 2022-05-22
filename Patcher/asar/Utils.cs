@@ -9,7 +9,7 @@ namespace asardotnetasync
         public static void Write(this byte[] bytes, string destination)
         {
             var dirPath = Path.GetDirectoryName(destination);
-            dirPath.CreateDir();
+            dirPath?.CreateDir();
             File.WriteAllBytes(destination, bytes);
         }
 
@@ -20,12 +20,16 @@ namespace asardotnetasync
 
         public static async Task<int> WriteToFile(byte[] bytes, string destination)
         {
-            Path.GetDirectoryName(destination).CreateDir();
+            Path.GetDirectoryName(destination)?.CreateDir();
+#pragma warning disable IDE0063
+#pragma warning disable CA1835
             using (var fs = File.Create(destination))
             {
                 await fs.WriteAsync(bytes, 0, bytes.Length);
                 return 1;
             }
+#pragma warning restore CA1835
+#pragma warning restore IDE0063
         }
 
     }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
@@ -9,31 +9,13 @@ namespace asardotnetasync
 
     public class AsarExtractor
     {
-
+#pragma warning disable CS8618
         public event EventHandler<AsarExtractEvent> FileExtracted;
         public event EventHandler<bool> Finished;
 
-
-
-        public async Task<bool> Extract(AsarArchive archive, string path, string destination)
-        {
-
-            var pathArr = path.Split('/');
-
-            var token = pathArr.Aggregate<string, JToken>(archive.Header.Json, (current, t) => current["files"][t]);
-
-            var size = token.Value<int>("size");
-            var offset = archive.BaseOffset + token.Value<int>("offset");
-
-            var fileBytes = archive.Bytes.Skip(offset).Take(size).ToArray();
-
-            //Write bytes to file TODO
-
-            return true;
-        }
-
         private List<AsarFile> _filesToExtract;
         private bool _emptyDir = false;
+#pragma warning restore CS8618
 
         public async Task<bool> ExtractAll(AsarArchive archive, string destination, bool emptyDir = false)
         {
@@ -44,7 +26,9 @@ namespace asardotnetasync
             _emptyDir = emptyDir;
 
             var jObject = archive.Header.Json;
+#pragma warning disable CS8604
             if (jObject.HasValues) TokenIterator(jObject.First);
+#pragma warning restore CS8604
 
             var bytes = archive.Bytes;
 
@@ -61,7 +45,7 @@ namespace asardotnetasync
                     var fileBytes = new byte[size];
 
                     Buffer.BlockCopy(bytes, offset, fileBytes, 0, size);
-                    var filePath = $"{destination}{asarFile.Path}";
+                    var filePath = Path.Combine(destination, asarFile.Path);
 
                     await Utils.WriteToFile(fileBytes, filePath);
 
@@ -70,7 +54,7 @@ namespace asardotnetasync
                 else
                 {
                     if (_emptyDir)
-                        $"{destination}{asarFile.Path}".CreateDir();
+                        Path.Combine(destination, asarFile.Path).CreateDir();
                 }
             }
 
@@ -83,7 +67,9 @@ namespace asardotnetasync
         {
             var property = token as JProperty;
 
+#pragma warning disable CS8602
             foreach (var jToken in property.Value.Children())
+#pragma warning restore CS8602
             {
                 var prop = (JProperty)jToken;
                 var size = -1;
