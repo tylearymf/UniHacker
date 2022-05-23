@@ -48,6 +48,18 @@ namespace UniHacker
             return (dot ? "." : "") + extension;
         }
 
+        public static PlatformType GetPlatformTypeByArch(ArchitectureType type)
+        {
+            if ((type & ArchitectureType.Windows) != 0)
+                return PlatformType.Windows;
+            else if ((type & ArchitectureType.MacOS) != 0)
+                return PlatformType.MacOS;
+            else if ((type & ArchitectureType.Linux) != 0)
+                return PlatformType.Linux;
+            else
+                return PlatformType.Unknown;
+        }
+
         public static PlatformType GetPlatformType()
         {
             if (IsWindows())
@@ -75,14 +87,14 @@ namespace UniHacker
             return RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
         }
 
-        public static (string fileVersion, int majorVersion, int minorVersion) GetFileVersionInfo(string filePath)
+        public static (string fileVersion, int majorVersion, int minorVersion) GetFileVersionInfo(string filePath, ArchitectureType architectureType)
         {
             var rootPath = Path.GetDirectoryName(filePath);
             var fileVersion = string.Empty;
             var majorVersion = 0;
             var minorVersion = 0;
 
-            switch (GetPlatformType())
+            switch (GetPlatformTypeByArch(architectureType))
             {
                 case PlatformType.Windows:
                     var info = FileVersionInfo.GetVersionInfo(filePath);

@@ -28,18 +28,17 @@ namespace UniHacker
             var realFilePath = filePath;
             var fileName = Path.GetFileNameWithoutExtension(filePath);
             RootPath = Path.GetDirectoryName(sourceFilePath) ?? string.Empty;
-            switch (PlatformUtils.GetPlatformType())
+
+            if (PlatformUtils.GetPlatformType() == PlatformType.MacOS)
             {
-                case PlatformType.MacOS:
-                    var rootPath = Path.Combine(filePath, "Contents");
-                    realFilePath = Path.Combine(rootPath, $"MacOS/{fileName}");
-                    RootPath = rootPath;
-                    break;
+                var rootPath = Path.Combine(filePath, "Contents");
+                realFilePath = Path.Combine(rootPath, $"MacOS/{fileName}");
+                RootPath = rootPath;
             }
 
             FilePath = realFilePath;
-            (FileVersion, MajorVersion, MinorVersion) = PlatformUtils.GetFileVersionInfo(filePath);
             ArchitectureType = MachineArchitecture.GetArchitectureType(realFilePath);
+            (FileVersion, MajorVersion, MinorVersion) = PlatformUtils.GetFileVersionInfo(filePath, ArchitectureType);
             PatchStatus = PatchStatus.Unknown;
             if (this is not DefaultPatcher)
             {

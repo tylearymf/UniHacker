@@ -24,11 +24,11 @@ namespace UniHacker
 
                 var cpuType = reader.ReadUInt32();
                 if (cpuType == I386)
-                    return ArchitectureType.Mac_I386;
+                    return ArchitectureType.MacOS_I386;
                 else if (cpuType == X86_64)
-                    return ArchitectureType.Mac_X86_64;
+                    return ArchitectureType.MacOS_X86_64;
                 else if (cpuType == ARM64)
-                    return ArchitectureType.Mac_ARM64;
+                    return ArchitectureType.MacOS_ARM64;
             }
             catch { }
 

@@ -50,7 +50,7 @@ namespace UniHacker.Views
 
         void UpdateFilePath(string filePath)
         {
-            patcher = PatchManager.GetPatcher(filePath);
+            patcher = PatchManager.GetPatcher(filePath, PlatformUtils.GetPlatformType());
             var status = patcher?.PatchStatus ?? PatchStatus.Unknown;
 
             FilePath.Text = filePath;

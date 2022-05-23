@@ -48,8 +48,8 @@ echo rename executable file
 set exeFullName=%exeName%%verName%
 ren %publish%\win-x86\%exeName%.exe %exeFullName%.exe
 ren %publish%\win-x64\%exeName%.exe %exeFullName%.exe
-ren %publish%\osx-x64\%exeName% %exeFullName%.app
-ren %publish%\linux-x64\%exeName% %exeFullName%.AppImage
+REM ren %publish%\osx-x64\%exeName% %exeFullName%
+REM ren %publish%\linux-x64\%exeName% %exeFullName%
 
 echo compress windows x86 file
 7z a %publish%\%exeName%-win-x86.7z %publish%\win-x86\* > nul
@@ -64,7 +64,7 @@ echo compress linux x64 file
 7z a %publish%\%exeName%-linux-x64.7z %publish%\linux-x64\* > nul
 
 echo calculate file hash
-7z h -scrcSHA256 %publish%\*\*.exe %publish%\*\*.app %publish%\*\*.AppImage >> %publish%\hash.txt
+7z h -scrcSHA256 %publish%\*\*.exe %publish%\*\* >> %publish%\hash.txt
 
 echo build finished. output:"%publish%"
 pause

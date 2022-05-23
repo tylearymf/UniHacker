@@ -5,9 +5,9 @@ namespace UniHacker
 {
     internal class PatchManager
     {
-        public static Patcher? GetPatcher(string filePath)
+        public static Patcher? GetPatcher(string filePath, PlatformType platformType)
         {
-            Func<string, bool> existAction = PlatformUtils.GetPlatformType() == PlatformType.MacOS ? Directory.Exists : File.Exists;
+            Func<string, bool> existAction = platformType == PlatformType.MacOS ? Directory.Exists : File.Exists;
             if (!existAction(filePath))
             {
                 MessageBox.Show(Language.GetString("NotExist", filePath));
