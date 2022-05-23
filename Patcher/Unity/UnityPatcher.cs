@@ -56,25 +56,12 @@ namespace UniHacker
                     File.Delete(bakPath);
                 await File.WriteAllBytesAsync(bakPath, fileBytes);
 
-                if (PlatformUtils.IsOSX())
-                {
-                    // chmod +x
-                    _ = new UnixFileInfo(bakPath)
-                    {
-                        FileAccessPermissions = FileAccessPermissions.UserExecute |
-                                                         FileAccessPermissions.OtherExecute |
-                                                         FileAccessPermissions.GroupExecute
-                    };
-                }
-                else if (PlatformUtils.IsLinux())
+                if (PlatformUtils.IsOSX() || PlatformUtils.IsLinux())
                 {
                     _ = new UnixFileInfo(bakPath)
                     {
-                        FileAccessPermissions = FileAccessPermissions.UserReadWriteExecute |
-                                                         FileAccessPermissions.OtherRead |
-                                                         FileAccessPermissions.OtherExecute |
-                                                         FileAccessPermissions.OtherRead |
-                                                         FileAccessPermissions.OtherExecute
+                        // rwxr-xr-x
+                        FileAccessPermissions = (FileAccessPermissions)0B111101101
                     };
                 }
 

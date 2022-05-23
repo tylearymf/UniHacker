@@ -203,15 +203,15 @@ namespace UniHacker
         {
             new()
             {
-                Version = "2021.3.0",
-                LightPattern = ToBytes(ToArray("74 66 48 8D 35 C2 00 C0 01 48 8D"), ToArray("84 3E 01 00 00 48 8D B5 C8 FE FF FF 4C")),
-                DarkPattern = ToBytes(ToArray("EB 66 48 8D 35 C2 00 C0 01 48 8D"), ToArray("85 3E 01 00 00 48 8D B5 C8 FE FF FF 4C")),
+                Version = "2019",
+                LightPattern = ToBytes(ToArray("72 FF 80 B8 69 4C 00 00 00 74"), ToArray("BB 02 00 00 00 45 84 FF 0F 84")),
+                DarkPattern = ToBytes(ToArray("72 FF 80 B8 69 4C 00 00 00 EB"), ToArray("BB 02 00 00 00 45 84 FF 0F 85")),
             },
             new()
             {
-                Version = "2021.3.2",
-                LightPattern = ToBytes(ToArray("74 66 48 8D 35 C2 0B C0 01 48 8D"), ToArray("84 3E 01 00 00 48 8D B5 C8 FE FF FF 4C")),
-                DarkPattern = ToBytes(ToArray("EB 66 48 8D 35 C2 0B C0 01 48 8D"), ToArray("85 3E 01 00 00 48 8D B5 C8 FE FF FF 4C")),
+                Version = "2021",
+                LightPattern = ToBytes(ToArray("44 8A B0 A1 64 00 00 45 84 F6 74"), ToArray("00 41 BF 02 00 00 00 84 C0 0F 84")),
+                DarkPattern = ToBytes(ToArray("44 8A B0 A1 64 00 00 45 84 F6 EB"), ToArray("00 41 BF 02 00 00 00 84 C0 0F 85")),
             }
         };
 
@@ -234,23 +234,35 @@ namespace UniHacker
                 LightPattern = ToBytes(0x75, 0x14, 0xB8, 0x02, 0x00, 0x00, 0x00, 0xE9, 0x66),
                 DarkPattern = ToBytes(0xEB, 0x14, 0xB8, 0x02, 0x00, 0x00, 0x00, 0xE9, 0x66),
             }.ToArray());
+
+
+            // set default architecture
+            foreach (var item in WindowsPatches)
+                if (!item.Architecture.HasValue)
+                    item.Architecture = ArchitectureType.Windows_X86_64;
+            foreach (var item in MacOSPatches)
+                if (!item.Architecture.HasValue)
+                    item.Architecture = ArchitectureType.MacOS_X86_64;
+            foreach (var item in LinuxPatches)
+                if (!item.Architecture.HasValue)
+                    item.Architecture = ArchitectureType.Linux_X86_64;
         }
 
 
         public static UnityPatchInfo FindPatchInfo(string version, ArchitectureType architectureType)
         {
-            var pathInfos = GetPatchInfos();
+            var pathInfos = GetPatchInfos(architectureType);
 #pragma warning disable CS8602
 #pragma warning disable CS8603
             var infos = pathInfos.FindAll(x => version.StartsWith(x.Version) && x.Architecture == architectureType);
-            return infos.OrderByDescending(x => x.Version).FirstOrDefault();
+            return infos.OrderByDescending(x => x.Version.Length).FirstOrDefault();
 #pragma warning restore CS8602
 #pragma warning restore CS8603
         }
 
-        public static List<UnityPatchInfo>? GetPatchInfos()
+        public static List<UnityPatchInfo>? GetPatchInfos(ArchitectureType type)
         {
-            return PlatformUtils.GetPlatformType() switch
+            return PlatformUtils.GetPlatformTypeByArch(type) switch
             {
                 PlatformType.Windows => WindowsPatches,
                 PlatformType.MacOS => MacOSPatches,
@@ -265,28 +277,11 @@ namespace UniHacker
     {
         public string Version { get; set; }
 
-        public ArchitectureType Architecture { get; set; }
+        public ArchitectureType? Architecture { get; set; }
 
         public List<byte[]> DarkPattern { get; set; }
 
         public List<byte[]> LightPattern { get; set; }
-
-        public UnityPatchInfo()
-        {
-            switch (PlatformUtils.GetPlatformType())
-            {
-                case PlatformType.Windows:
-                    Architecture = ArchitectureType.Windows_X86_64;
-                    break;
-                case PlatformType.MacOS:
-                    Architecture = ArchitectureType.Mac_X86_64;
-                    break;
-                case PlatformType.Linux:
-                    //TODO linux
-                    Architecture = ArchitectureType.Linux_X86_64;
-                    break;
-            }
-        }
 
         public bool IsValid()
         {

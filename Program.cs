@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Avalonia;
 using Avalonia.ReactiveUI;
 
@@ -12,6 +13,7 @@ namespace UniHacker
         [STAThread]
         public static void Main(string[] args)
         {
+            //Test();
             Language.Init();
             BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
         }
@@ -22,5 +24,17 @@ namespace UniHacker
                 .UsePlatformDetect()
                 .LogToTrace()
                 .UseReactiveUI();
+
+        static void Test()
+        {
+#if DEBUG
+            var patchInfo = UnityPatchInfos.FindPatchInfo("2019.4.39f1", ArchitectureType.MacOS_X86_64);
+            var fileBytes = File.ReadAllBytes("D:/Unity");
+            var darkIndexes = BoyerMooreSearcher.FindPattern(patchInfo.DarkPattern, fileBytes);
+            var lightIndexes = BoyerMooreSearcher.FindPattern(patchInfo.LightPattern, fileBytes);
+            Console.WriteLine("darkIndexes:" + darkIndexes.Count);
+            Console.WriteLine("lightIndexes:" + lightIndexes.Count);
+#endif
+        }
     }
 }

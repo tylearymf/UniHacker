@@ -23,7 +23,7 @@ Patch all versions of Unity3D and UnityHub.
 
 ### Supported Unity Versions
 
-|      2021.3.2      |      2021.3.0      |      |      |      |      |
+|       2021.x       |       2019.x       |      |      |      |      |
 | :----------------: | :----------------: | :--: | :--: | :--: | :--: |
 | :white_check_mark: | :white_check_mark: |      |      |      |      |
 
