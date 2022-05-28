@@ -80,7 +80,7 @@ namespace UniHacker
 
                 if (PlatformUtils.IsWindows())
                 {
-                    var licensingFilePath = Path.Combine(RootPath, @"Data\Resources\Licensing\Client\Unity.Licensing.Client" + PlatformUtils.GetExtension());
+                    var licensingFilePath = Path.Combine(RootPath, "Data/Resources/Licensing/Client/Unity.Licensing.Client" + PlatformUtils.GetExtension());
                     if (File.Exists(licensingFilePath))
                         File.Move(licensingFilePath, licensingFilePath + ".bak");
                 }

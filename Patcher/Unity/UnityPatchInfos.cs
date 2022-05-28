@@ -212,6 +212,14 @@ namespace UniHacker
                 Version = "2021",
                 LightPattern = ToBytes(ToArray("44 8A B0 A1 64 00 00 45 84 F6 74 66"), ToArray("00 41 BF 02 00 00 00 84 C0 0F 84 3E")),
                 DarkPattern = ToBytes(ToArray("44 8A B0 A1 64 00 00 45 84 F6 EB 66"), ToArray("00 41 BF 02 00 00 00 84 C0 0F 85 3E")),
+            },
+            new()
+            {
+                // test on 2021.3.2 m1
+                Version = "2021",
+                Architecture = ArchitectureType.MacOS_ARM64,
+                LightPattern = ToBytes(ToArray("F4 02 00 34 21 CC 00 B0 21 40 22 91 83"), ToArray("94 20 06 00 36 E1 E3 01 91 E0 03 13 AA 2F 0B")),
+                DarkPattern = ToBytes(ToArray("17 00 00 14 21 CC 00 B0 21 40 22 91 83"), ToArray("94 1F 20 03 D5 E1 E3 01 91 E0 03 13 AA 2F 0B")),
             }
         };
 
