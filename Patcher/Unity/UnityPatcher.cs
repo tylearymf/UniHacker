@@ -1,6 +1,8 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -83,6 +85,28 @@ namespace UniHacker
                     var licensingFilePath = Path.Combine(RootPath, "Data/Resources/Licensing/Client/Unity.Licensing.Client" + PlatformUtils.GetExtension());
                     if (File.Exists(licensingFilePath))
                         File.Move(licensingFilePath, licensingFilePath + ".bak");
+                }
+
+                //给 arm64 binary 自签名
+                if (PlatformUtils.IsOSX() && patchInfo.Architecture == ArchitectureType.MacOS_ARM64)
+                {
+                    try
+                    {
+                        var startInfo = new ProcessStartInfo("codesign", $"--force --deep --sign - {FilePath}")
+                            {
+                                RedirectStandardError = true
+                            };
+                        var process = Process.Start(startInfo);
+                        await process!.WaitForExitAsync();
+                        if (process.ExitCode != 0)
+                        {
+                            return (false, $"Codesign failed. {await process.StandardError.ReadToEndAsync()}");
+                        }
+                    }
+                    catch (Win32Exception)
+                    {
+                        return (false, "Cannot locate codesign");
+                    }
                 }
 
                 // 创建许可证
