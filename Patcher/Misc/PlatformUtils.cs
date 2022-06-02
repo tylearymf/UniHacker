@@ -87,6 +87,21 @@ namespace UniHacker
             return RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
         }
 
+        public static (string rootPath, string filePath) GetRealFilePath(string filePath)
+        {
+            var realFilePath = filePath;
+            var fileName = Path.GetFileNameWithoutExtension(filePath);
+            var rootPath = Path.GetDirectoryName(filePath) ?? string.Empty;
+
+            if (GetPlatformType() == PlatformType.MacOS)
+            {
+                rootPath = Path.Combine(filePath, "Contents");
+                realFilePath = Path.Combine(rootPath, $"MacOS/{fileName}");
+            }
+
+            return (rootPath, realFilePath);
+        }
+
         public static (string fileVersion, int majorVersion, int minorVersion) GetFileVersionInfo(string filePath, ArchitectureType architectureType)
         {
             var rootPath = Path.GetDirectoryName(filePath);

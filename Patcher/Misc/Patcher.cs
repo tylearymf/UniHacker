@@ -24,19 +24,11 @@ namespace UniHacker
 
         public Patcher(string filePath)
         {
-            var sourceFilePath = filePath;
-            var realFilePath = filePath;
             var fileName = Path.GetFileNameWithoutExtension(filePath);
-            RootPath = Path.GetDirectoryName(sourceFilePath) ?? string.Empty;
-
-            if (PlatformUtils.GetPlatformType() == PlatformType.MacOS)
-            {
-                var rootPath = Path.Combine(filePath, "Contents");
-                realFilePath = Path.Combine(rootPath, $"MacOS/{fileName}");
-                RootPath = rootPath;
-            }
+            var (rootPath, realFilePath) = PlatformUtils.GetRealFilePath(filePath);
 
             FilePath = realFilePath;
+            RootPath = rootPath;
             ArchitectureType = MachineArchitecture.GetArchitectureType(realFilePath);
             (FileVersion, MajorVersion, MinorVersion) = PlatformUtils.GetFileVersionInfo(filePath, ArchitectureType);
             PatchStatus = PatchStatus.Unknown;

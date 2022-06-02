@@ -23,8 +23,12 @@ Patch all versions of Unity3D and UnityHub.
 
 ### Supported Unity Versions
 
-|       2021.x       |       2019.x       |      |      |      |      |
-| :----------------: | :----------------: | :--: | :--: | :--: | :--: |
+|       2022.1       |       2021.x       |       2020.x       |       2019.x       |       2018.x       |       2017.x       |
+| :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: |
+| :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+
+|        5.x         |        4.x         |      |      |      |      |
+| :----------------: | :----------------: | ---- | ---- | ---- | ---- |
 | :white_check_mark: | :white_check_mark: |      |      |      |      |
 
 ### Supported UnityHub Versions
