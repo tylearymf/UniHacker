@@ -88,9 +88,10 @@ namespace UniHacker
                     File.Move(licensingFilePath, licensingFilePath + ".bak");
             }
 
-            //给 arm64 binary 自签名
+            //给 arm64 binary 自签名并放行
             if (PlatformUtils.IsOSX() && patchInfo.Architecture == ArchitectureType.MacOS_ARM64)
             {
+                //自签名
                 try
                 {
                     var startInfo = new ProcessStartInfo("codesign", $"--force --deep --sign - {FilePath}")
@@ -107,6 +108,14 @@ namespace UniHacker
                 catch (Win32Exception)
                 {
                     return (false, "Cannot locate codesign");
+                }
+                //放行quarantine
+                var attrStartInfo = new ProcessStartInfo("xattr", $"-rd com.apple.quarantine {FilePath}");
+                var attrProcess = Process.Start(attrStartInfo);
+                await attrProcess!.WaitForExitAsync();
+                if (attrProcess.ExitCode != 0)
+                {
+                    return (false, "Set quarantine attribute failed.");
                 }
             }
 
