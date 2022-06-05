@@ -38,12 +38,17 @@ namespace UniHacker
         public static string GetExtension(bool dot = true)
         {
             var extension = string.Empty;
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                extension = "exe";
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                extension = "app";
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                extension = "";
+            switch (GetPlatformType())
+            {
+                case PlatformType.Windows:
+                    extension = "exe";
+                    break;
+                case PlatformType.MacOS:
+                    extension = "app";
+                    break;
+                case PlatformType.Linux:
+                    return string.Empty;
+            }
 
             return (dot ? "." : "") + extension;
         }
@@ -93,10 +98,16 @@ namespace UniHacker
             var fileName = Path.GetFileNameWithoutExtension(filePath);
             var rootPath = Path.GetDirectoryName(filePath) ?? string.Empty;
 
-            if (GetPlatformType() == PlatformType.MacOS)
+            switch (GetPlatformType())
             {
-                rootPath = Path.Combine(filePath, "Contents");
-                realFilePath = Path.Combine(rootPath, $"MacOS/{fileName}");
+                case PlatformType.MacOS:
+                    rootPath = Path.Combine(filePath, "Contents");
+                    realFilePath = Path.Combine(rootPath, $"MacOS/{fileName}");
+                    break;
+                case PlatformType.Linux:
+                    if (fileName == "unityhub")
+                        realFilePath = Path.Combine(rootPath, "unityhub-bin");
+                    break;
             }
 
             return (rootPath, realFilePath);
@@ -104,6 +115,7 @@ namespace UniHacker
 
         public static (string fileVersion, int majorVersion, int minorVersion) GetFileVersionInfo(string filePath, ArchitectureType architectureType)
         {
+            var fileName = Path.GetFileNameWithoutExtension(filePath);
             var rootPath = Path.GetDirectoryName(filePath);
             var fileVersion = string.Empty;
             var majorVersion = 0;
@@ -132,26 +144,47 @@ namespace UniHacker
                     }
                     break;
                 case PlatformType.Linux:
-#pragma warning disable CS8604
-                    var cacheFolder = new DirectoryInfo(Path.Combine(rootPath, "Data/Resources/PackageManager/ProjectTemplates/libcache"));
-#pragma warning restore CS8604
-                    if (cacheFolder.Exists)
+                    if (fileName.Contains("unityhub", StringComparison.OrdinalIgnoreCase))
                     {
-                        var childFolders = cacheFolder.GetDirectories();
-                        foreach (var child in childFolders)
+                        var hubPath = Path.GetDirectoryName(rootPath);
+                        var infoPath = Path.Combine(hubPath!, "info");
+                        if (File.Exists(infoPath))
                         {
-                            var infoPath = Path.Combine(child.FullName, "Bee/bee_backend.info");
-                            if (File.Exists(infoPath))
+                            var infoContent = File.ReadAllText(infoPath);
+                            var infoMatch = Regex.Match(infoContent, @"version\"":\s*\""(?<version>.*?)\""", RegexOptions.Singleline);
+                            if (infoMatch.Success)
                             {
-                                var infoContent = File.ReadAllText(infoPath);
-                                var infoMatch = Regex.Match(infoContent, @"UnityVersion\"":\s*\""(?<version>.*?)\""", RegexOptions.Singleline);
-                                if (infoMatch.Success)
+                                fileVersion = infoMatch.Groups["version"].Value;
+                                var versions = fileVersion.Split('.');
+                                _ = int.TryParse(versions[0], out majorVersion);
+                                _ = int.TryParse(versions[1], out minorVersion);
+                                return (fileVersion, majorVersion, minorVersion);
+                            }
+                        }
+                    }
+                    else
+                    {
+#pragma warning disable CS8604
+                        var cacheFolder = new DirectoryInfo(Path.Combine(rootPath, "Data/Resources/PackageManager/ProjectTemplates/libcache"));
+#pragma warning restore CS8604
+                        if (cacheFolder.Exists)
+                        {
+                            var childFolders = cacheFolder.GetDirectories();
+                            foreach (var child in childFolders)
+                            {
+                                var infoPath = Path.Combine(child.FullName, "Bee/bee_backend.info");
+                                if (File.Exists(infoPath))
                                 {
-                                    fileVersion = infoMatch.Groups["version"].Value;
-                                    var versions = fileVersion.Split('.');
-                                    _ = int.TryParse(versions[0], out majorVersion);
-                                    _ = int.TryParse(versions[1], out minorVersion);
-                                    return (fileVersion, majorVersion, minorVersion);
+                                    var infoContent = File.ReadAllText(infoPath);
+                                    var infoMatch = Regex.Match(infoContent, @"UnityVersion\"":\s*\""(?<version>.*?)\""", RegexOptions.Singleline);
+                                    if (infoMatch.Success)
+                                    {
+                                        fileVersion = infoMatch.Groups["version"].Value;
+                                        var versions = fileVersion.Split('.');
+                                        _ = int.TryParse(versions[0], out majorVersion);
+                                        _ = int.TryParse(versions[1], out minorVersion);
+                                        return (fileVersion, majorVersion, minorVersion);
+                                    }
                                 }
                             }
                         }
