@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Mono.Unix;
 
 namespace UniHacker
 {
@@ -59,14 +58,15 @@ namespace UniHacker
                 File.Delete(bakPath);
             await File.WriteAllBytesAsync(bakPath, fileBytes);
 
-            if (PlatformUtils.IsOSX() || PlatformUtils.IsLinux())
-            {
-                _ = new UnixFileInfo(bakPath)
-                {
-                    // rwxr-xr-x
-                    FileAccessPermissions = (FileAccessPermissions)0B111101101
-                };
-            }
+            // 修改 bak 权限
+            //if (PlatformUtils.IsOSX() || PlatformUtils.IsLinux())
+            //{
+            //    _ = new UnixFileInfo(bakPath)
+            //    {
+            //        // rwxr-xr-x
+            //        FileAccessPermissions = (FileAccessPermissions)0B111101101
+            //    };
+            //}
 
             // 写入文件流
             for (var i = 0; i < patchInfo.DarkPattern.Count; i++)
@@ -81,12 +81,9 @@ namespace UniHacker
             using (var sw = File.OpenWrite(FilePath))
                 sw.Write(fileBytes, 0, fileBytes.Length);
 
-            if (PlatformUtils.IsWindows())
-            {
-                var licensingFilePath = Path.Combine(RootPath, "Data/Resources/Licensing/Client/Unity.Licensing.Client" + PlatformUtils.GetExtension());
-                if (File.Exists(licensingFilePath))
-                    File.Move(licensingFilePath, licensingFilePath + ".bak");
-            }
+            var licensingFilePath = Path.Combine(RootPath, "Data/Resources/Licensing/Client/Unity.Licensing.Client" + PlatformUtils.GetExtension());
+            if (File.Exists(licensingFilePath))
+                File.Move(licensingFilePath, licensingFilePath + ".bak");
 
             //给 arm64 binary 自签名并放行
             if (PlatformUtils.IsOSX() && patchInfo.Architecture == ArchitectureType.MacOS_ARM64)
