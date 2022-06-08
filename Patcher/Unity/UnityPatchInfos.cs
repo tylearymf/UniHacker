@@ -175,7 +175,7 @@ namespace UniHacker
             },
             new()
             {
-                Version = "2021.3",
+                Version = "2021.3.2",
                 LightPattern = ToBytes(ToArray("74 19 48 8D 0D C0 82 3F 01"), ToArray("75 14 B8 02 00 00 00 E9 66")),
                 DarkPattern = ToBytes(ToArray("EB 19 48 8D 0D C0 82 3F 01"), ToArray("74 14 B8 02 00 00 00 E9 66")),
             },
@@ -184,6 +184,13 @@ namespace UniHacker
                 Version = "2021.3.3",
                 LightPattern = ToBytes(ToArray("0F 84 9C 00 00 00 C7 44 24 20 24"), ToArray("75 14 B8 02 00 00 00 E9 66")),
                 DarkPattern = ToBytes(ToArray("E9 9D 00 00 00 00 C7 44 24 20 24"), ToArray("74 14 B8 02 00 00 00 E9 66")),
+            },
+            new()
+            {
+                // 2021.3.4
+                Version = "2021.3",
+                LightPattern = ToBytes(ToArray("E9 C5 00 00 00 48 8D 0D 67 1E 40"), ToArray("75 14 B8 02 00 00 00 E9 66")),
+                DarkPattern = ToBytes(ToArray("EB 3C 00 00 00 48 8D 0D 67 1E 40"), ToArray("74 14 B8 02 00 00 00 E9 66")),
             },
             new()
             {
