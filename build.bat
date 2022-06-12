@@ -48,8 +48,14 @@ echo rename executable file
 set exeFullName=%exeName%%verName%
 ren %publish%\win-x86\%exeName%.exe %exeFullName%.exe
 ren %publish%\win-x64\%exeName%.exe %exeFullName%.exe
-REM ren %publish%\osx-x64\%exeName% %exeFullName%
-REM ren %publish%\linux-x64\%exeName% %exeFullName%
+ren %publish%\linux-x64\%exeName% %exeFullName%.AppImage
+
+echo create macos bundle
+set osxPath=%publish%\osx-x64
+set bundlePath=%osxPath%\%exeFullName%.app
+echo d| xcopy /E/Y ".\Bundle\%exeName%.app" "%bundlePath%" > nul
+echo f| xcopy /Y "%osxPath%\%exeName%" "%bundlePath%\Contents\Resources\script" > nul
+del /q %osxPath%\%exeName% > nul
 
 echo compress windows x86 file
 7z a %publish%\%exeName%-win-x86.7z %publish%\win-x86\* > nul
@@ -58,13 +64,14 @@ echo compress windows x64 file
 7z a %publish%\%exeName%-win-x64.7z %publish%\win-x64\* > nul
 
 echo compress macos x64 file
-7z a %publish%\%exeName%-osx-x64.7z %publish%\osx-x64\* > nul
+7zg a -ttar -so -an %publish%\osx-x64\* | 7zg a -si %publish%\%exeName%-osx-x64.tgz > nul
 
 echo compress linux x64 file
-7z a %publish%\%exeName%-linux-x64.7z %publish%\linux-x64\* > nul
+7zg a -ttar -so -an %publish%\linux-x64\* | 7zg a -si %publish%\%exeName%-linux-x64.tgz > nul
 
 echo calculate file hash
-7z h -scrcSHA256 %publish%\*\*.exe %publish%\*\* >> %publish%\hash.txt
+7z h -scrcSHA256 %publish%\*\*.exe %publish%\*\*.AppImage >> %publish%\hash.txt
+7z h -scrcSHA256 %publish%\*\*.app >> %publish%\hash_mac.txt
 
 echo build finished. output:"%publish%"
 pause
