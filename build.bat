@@ -39,7 +39,7 @@ echo dotnet publish windows x64
 dotnet publish -c:Release -f:net6.0 -r:win-x64 -o:%publish%\win-x64 %param% > nul
 
 echo dotnet publish macos x64
-dotnet publish -c:Release -f:net6.0 -r:osx-x64 -o:%publish%\osx-x64 %param% > nul
+dotnet publish -c:Release -f:net6.0 -r:osx-x64 -o:%publish%\osx-x64 %param% -p:PublishSingleFile=false > nul
 
 echo dotnet publish linux x64
 dotnet publish -c:Release -f:net6.0 -r:linux-x64 -o:%publish%\linux-x64 %param% > nul
@@ -56,6 +56,7 @@ set bundlePath=%osxPath%\%exeFullName%.app
 echo d| xcopy /E/Y ".\Bundle\%exeName%.app" "%bundlePath%" > nul
 echo f| xcopy /Y "%osxPath%\%exeName%" "%bundlePath%\Contents\Resources\script" > nul
 del /q %osxPath%\%exeName% > nul
+echo d| move /Y "%osxPath%\*.*" "%bundlePath%\Contents\Resources\" > nul
 
 echo compress windows x86 file
 7z a %publish%\%exeName%-win-x86.7z %publish%\win-x86\* > nul
