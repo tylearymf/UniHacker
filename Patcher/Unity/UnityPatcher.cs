@@ -41,7 +41,12 @@ namespace UniHacker
 
                 if (PatchStatus == PatchStatus.NotSupport)
                 {
-                    if (Regex.IsMatch(FileVersion, @"\d+\.\d+.\d+f\d+c\d+(.*)?"))
+                    var isSpecial = Regex.IsMatch(FileVersion, @"\d+\.\d+.\d+f\d+c\d+(.*)?") ||
+                                    File.Exists(Path.Combine(RootPath, "hasp_rt.exe")) ||
+                                    File.Exists(Path.Combine(RootPath, "hasp_update.exe")) ||
+                                    File.Exists(Path.Combine(RootPath, "unity-sl.v2c")) ||
+                                    File.ReadAllBytes(filePath)?.Length <= 50 * 1024 * 1024;
+                    if (isSpecial)
                         PatchStatus = PatchStatus.Special;
                 }
             }
