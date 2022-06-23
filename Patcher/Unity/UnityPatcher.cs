@@ -112,10 +112,7 @@ namespace UniHacker
                     return (false, "Cannot locate codesign");
                 }
                 //放行quarantine
-                var attrStartInfo = new ProcessStartInfo("xattr", $"-rd com.apple.quarantine {FilePath}");
-                var attrProcess = Process.Start(attrStartInfo);
-                await attrProcess!.WaitForExitAsync();
-                if (attrProcess.ExitCode != 0)
+                if (!await PlatformUtils.MacOSRemoveQuarantine(FilePath))
                 {
                     return (false, "Set quarantine attribute failed.");
                 }
