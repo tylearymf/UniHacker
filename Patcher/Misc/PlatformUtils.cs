@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Platform;
 
@@ -193,6 +194,21 @@ namespace UniHacker
             }
 
             return (fileVersion, majorVersion, minorVersion);
+        }
+
+        public static async Task<bool> MacOSRemoveQuarantine(string appPath)
+        {
+            try
+            {
+                var attrStartInfo = new ProcessStartInfo("xattr", $"-rds com.apple.quarantine \"{appPath}\"");
+                var attrProcess = Process.Start(attrStartInfo);
+                await attrProcess!.WaitForExitAsync();
+                return attrProcess.ExitCode == 0;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 

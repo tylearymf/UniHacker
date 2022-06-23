@@ -77,6 +77,10 @@ namespace UniHacker
 
                 if (File.Exists(asarPath) && !File.Exists(asarBackupPath))
                     File.Move(asarPath, asarBackupPath);
+                if (PlatformUtils.IsOSX())
+                {
+                    await PlatformUtils.MacOSRemoveQuarantine(Directory.GetParent(RootPath)!.FullName);
+                }
             }
             else
             {
