@@ -32,8 +32,8 @@ if exist "%publish%" (
 
 set param=--self-contained:true -p:PublishSingleFile=true -p:PublishTrimmed=true -p:IncludeAllContentForSelfExtract=true -p:IncludeNativeLibrariesForSelfExtract=true -p:DebugType=None -p:DebugSymbols=false
 
-echo dotnet publish windows x86
-dotnet publish -c:Release -f:net6.0 -r:win-x86 -o:%publish%\win-x86 %param% > nul
+REM echo dotnet publish windows x86
+REM dotnet publish -c:Release -f:net6.0 -r:win-x86 -o:%publish%\win-x86 %param% > nul
 
 echo dotnet publish windows x64
 dotnet publish -c:Release -f:net6.0 -r:win-x64 -o:%publish%\win-x64 %param% > nul
@@ -46,7 +46,7 @@ dotnet publish -c:Release -f:net6.0 -r:linux-x64 -o:%publish%\linux-x64 %param% 
 
 echo rename executable file
 set exeFullName=%exeName%%verName%
-ren %publish%\win-x86\%exeName%.exe %exeFullName%.exe
+REM ren %publish%\win-x86\%exeName%.exe %exeFullName%.exe
 ren %publish%\win-x64\%exeName%.exe %exeFullName%.exe
 ren %publish%\linux-x64\%exeName% %exeFullName%.AppImage
 
@@ -58,8 +58,8 @@ echo f| xcopy /Y "%osxPath%\%exeName%" "%bundlePath%\Contents\Resources\script" 
 del /q %osxPath%\%exeName% > nul
 echo d| move /Y "%osxPath%\*.*" "%bundlePath%\Contents\Resources\" > nul
 
-echo compress windows x86 file
-7z a %publish%\%exeName%-win-x86.7z %publish%\win-x86\* > nul
+REM echo compress windows x86 file
+REM 7z a %publish%\%exeName%-win-x86.7z %publish%\win-x86\* > nul
 
 echo compress windows x64 file
 7z a %publish%\%exeName%-win-x64.7z %publish%\win-x64\* > nul
