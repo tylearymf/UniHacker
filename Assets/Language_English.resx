@@ -134,7 +134,7 @@ https://www.github.com/tylearymf/UniHacker</value>
     <value>File doest not exist:{0}</value>
   </data>
   <data name="NotSupport" xml:space="preserve">
-    <value>NotSupport Patch</value>
+    <value>Not Support Patch</value>
   </data>
   <data name="Patched" xml:space="preserve">
     <value>Has been patched</value>
@@ -158,7 +158,7 @@ https://www.github.com/tylearymf/UniHacker</value>
     <value>Please select Unity or Unity Hub.</value>
   </data>
   <data name="Special" xml:space="preserve">
-    <value>NotSupport Patch</value>
+    <value>Special Edition</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status:</value>

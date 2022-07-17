@@ -175,16 +175,9 @@ namespace UniHacker
             },
             new()
             {
-                Version = "2021.2",
+                Version = "2021.2 ; 2021.3.0 ; 2021.3.1",
                 LightPattern = ToBytes(0x75, 0x14, 0xB8, 0x02, 0x00, 0x00, 0x00, 0xE9, 0x66),
                 DarkPattern = ToBytes(0xEB, 0x14, 0xB8, 0x02, 0x00, 0x00, 0x00, 0xE9, 0x66),
-            },
-            new()
-            {
-                // 2021.3.5
-                Version = "2021.3",
-                LightPattern = ToBytes(ToArray("0F 84 9C 00 00 00 C7 44 24 20 24"), ToArray("75 14 B8 02 00 00 00 E9 66")),
-                DarkPattern = ToBytes(ToArray("E9 9D 00 00 00 00 C7 44 24 20 24"), ToArray("74 14 B8 02 00 00 00 E9 66")),
             },
             new()
             {
@@ -198,6 +191,13 @@ namespace UniHacker
                 Version = "2021.3.4",
                 LightPattern = ToBytes(ToArray("E9 C5 00 00 00 48 8D 0D 67 1E 40"), ToArray("75 14 B8 02 00 00 00 E9 66")),
                 DarkPattern = ToBytes(ToArray("EB 3C 00 00 00 48 8D 0D 67 1E 40"), ToArray("74 14 B8 02 00 00 00 E9 66")),
+            },
+            new()
+            {
+                // 2021.3.5、2021.3.6
+                Version = "2021.3",
+                LightPattern = ToBytes(ToArray("0F 84 9C 00 00 00 C7 44 24 20 24"), ToArray("75 14 B8 02 00 00 00 E9 66")),
+                DarkPattern = ToBytes(ToArray("E9 9D 00 00 00 00 C7 44 24 20 24"), ToArray("74 14 B8 02 00 00 00 E9 66")),
             },
             new()
             {
@@ -268,16 +268,23 @@ namespace UniHacker
             new()
             {
                 // 2020.3.34 2020.3.35
-                Version = "2020",
+                Version = "2020.3",
                 LightPattern = ToBytes(ToArray("FF 80 B8 91 58 00 00 00 74 5D 48 8D 35"), ToArray("00 41 BF 02 00 00 00 84 C0 0F 84 81")),
                 DarkPattern = ToBytes(ToArray("FF 80 B8 91 58 00 00 00 EB 5D 48 8D 35"), ToArray("00 41 BF 02 00 00 00 84 C0 0F 85 81")),
             },
             new()
             {
                 // 2021.2.19
-                Version = "2021",
+                Version = "2021.2",
                 LightPattern = ToBytes(ToArray("44 8A B0 A1 64 00 00 45 84 F6 74 66"), ToArray("00 41 BF 02 00 00 00 84 C0 0F 84 3E")),
                 DarkPattern = ToBytes(ToArray("44 8A B0 A1 64 00 00 45 84 F6 EB 66"), ToArray("00 41 BF 02 00 00 00 84 C0 0F 85 3E")),
+            },
+            new()
+            {
+                //2021.3.6
+                Version = "2021.3",
+                LightPattern = ToBytes(ToArray("B0 A1 64 00 00 45 84 F6 74 66 48 8D 35"), ToArray("00 41 BF 02 00 00 00 84 C0 0F 84 3E")),
+                DarkPattern = ToBytes(ToArray("B0 A1 64 00 00 45 84 F6 EB 66 48 8D 35"), ToArray("00 41 BF 02 00 00 00 84 C0 0F 85 3E")),
             },
             new()
             {
@@ -338,6 +345,14 @@ namespace UniHacker
             },
             new()
             {
+                // 2021.3.6(m1)
+                Version = "2021.3.6",
+                Architecture = ArchitectureType.MacOS_ARM64,
+                LightPattern = ToBytes(ToArray("F4 02 00 34 81 D0 00 F0 21 20 25 91"), ToArray("20 06 00 36 E1 E3 01 91 E0 03 13 AA 2F 0B")),
+                DarkPattern = ToBytes(ToArray("17 00 00 14 81 D0 00 F0 21 20 25 91"), ToArray("20 06 00 37 E1 E3 01 91 E0 03 13 AA 2F 0B")),
+            },
+            new()
+            {
                 // 2022.1.2(m1)
                 Version = "2022",
                 Architecture = ArchitectureType.MacOS_ARM64,
@@ -358,27 +373,53 @@ namespace UniHacker
 
         static UnityPatchInfos()
         {
-            var patchInfos = WindowsPatches;
-            patchInfos.AddRange(new MultiVersionPatchInfo()
-            {
-                Versions = new List<string> { "2021.3.0", "2021.3.1" },
-                LightPattern = ToBytes(0x75, 0x14, 0xB8, 0x02, 0x00, 0x00, 0x00, 0xE9, 0x66),
-                DarkPattern = ToBytes(0xEB, 0x14, 0xB8, 0x02, 0x00, 0x00, 0x00, 0xE9, 0x66),
-            }.ToArray());
-
-
-            // set default architecture
-            foreach (var item in WindowsPatches)
-                if (!item.Architecture.HasValue)
-                    item.Architecture = ArchitectureType.Windows_X86_64;
-            foreach (var item in MacOSPatches)
-                if (!item.Architecture.HasValue)
-                    item.Architecture = ArchitectureType.MacOS_X86_64;
-            foreach (var item in LinuxPatches)
-                if (!item.Architecture.HasValue)
-                    item.Architecture = ArchitectureType.Linux_X86_64;
+            ProcessInfos(ref WindowsPatches, ArchitectureType.Windows);
+            ProcessInfos(ref MacOSPatches, ArchitectureType.MacOS);
+            ProcessInfos(ref LinuxPatches, ArchitectureType.Linux);
         }
 
+        static void ProcessInfos(ref List<UnityPatchInfo> patchInfos, ArchitectureType type)
+        {
+            foreach (var item in patchInfos)
+            {
+                if (!item.Architecture.HasValue)
+                    switch (type)
+                    {
+                        case ArchitectureType.Windows:
+                            item.Architecture = ArchitectureType.Windows_X86_64;
+                            break;
+                        case ArchitectureType.MacOS:
+                            item.Architecture = ArchitectureType.MacOS_X86_64;
+                            break;
+                        case ArchitectureType.Linux:
+                            item.Architecture = ArchitectureType.Linux_X86_64;
+                            break;
+                    }
+            }
+
+            var tempInfoDic = new Dictionary<string, UnityPatchInfo>();
+            foreach (var patchInfo in patchInfos)
+            {
+                var versions = patchInfo.Version.Split(";");
+                foreach (var item in versions)
+                {
+                    var version = item.Trim();
+                    var key = $"{version} - {patchInfo.Architecture}";
+                    if (tempInfoDic.ContainsKey(key))
+                        throw new ArgumentException($"{type} 中存在多个相同版本补丁：{key}");
+
+                    tempInfoDic.Add(key, new()
+                    {
+                        Version = version,
+                        DarkPattern = patchInfo.DarkPattern,
+                        LightPattern = patchInfo.LightPattern,
+                        Architecture = patchInfo.Architecture,
+                    });
+                }
+            }
+
+            patchInfos = tempInfoDic.Values.ToList();
+        }
 
         public static UnityPatchInfo? FindPatchInfo(string version, ArchitectureType architectureType)
         {
@@ -414,34 +455,10 @@ namespace UniHacker
         {
             return Architecture != ArchitectureType.UnKnown && DarkPattern != null && LightPattern != null;
         }
-    }
 
-    internal class MultiVersionPatchInfo
-    {
-        public List<string> Versions { set; get; }
-
-        public ArchitectureType Architecture { get; set; } = ArchitectureType.Windows_X86_64;
-
-        public List<byte[]> DarkPattern { get; set; }
-
-        public List<byte[]> LightPattern { get; set; }
-
-
-        public List<UnityPatchInfo> ToArray()
+        public override string ToString()
         {
-            var infos = new List<UnityPatchInfo>(Versions.Count);
-            foreach (var ver in Versions)
-            {
-                infos.Add(new()
-                {
-                    Version = ver,
-                    Architecture = Architecture,
-                    LightPattern = LightPattern,
-                    DarkPattern = DarkPattern,
-                });
-            }
-
-            return infos;
+            return $"{Version} - {Architecture}";
         }
     }
 #pragma warning restore CS8618
