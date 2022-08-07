@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace UniHacker
 {
@@ -16,7 +17,7 @@ namespace UniHacker
             if (string.IsNullOrEmpty(byteStr))
                 return Array.Empty<byte>();
 
-            return byteStr.Split(' ').ToList().ConvertAll(x => Convert.ToByte(x, 16)).ToArray();
+            return Regex.Split(byteStr, @"\s+").ToList().ConvertAll(x => Convert.ToByte(x, 16)).ToArray();
         }
 
         public static List<byte[]> ToBytes(string byteStr)
@@ -232,17 +233,17 @@ namespace UniHacker
             },
             new()
             {
-                // 2017.4.39 2017.4.40
+                // 2017.4.40
                 Version = "2017",
-                LightPattern = ToBytes("00 00 41 88 C6 48 8B BD 20 FE FF FF 48 85 FF 74"),
-                DarkPattern = ToBytes("00 00 41 88 C6 48 8B BD 20 FE FF FF 48 85 FF 75"),
+                LightPattern = ToBytes("26 02 88 D8 48 83 C4 18 5B 41 5C 41 5D 41 5E"),
+                DarkPattern = ToBytes("26 02 B0 01 48 83 C4 18 5B 41 5C 41 5D 41 5E"),
             },
             new()
             {
-                // 2018.4.35 2018.4.36
+                // 2018.4.36
                 Version = "2018",
-                LightPattern = ToBytes(ToArray("08 FF 80 B8 D9 4B 00 00 00 74 4A 48 8D 35"), ToArray("00 41 88 C4 48 8B BD 20 FE FF FF 48 85 FF 74 16")),
-                DarkPattern = ToBytes(ToArray("08 FF 80 B8 D9 4B 00 00 00 EB 4A 48 8D 35"), ToArray("00 41 88 C4 48 8B BD 20 FE FF FF 48 85 FF 75 16")),
+                LightPattern = ToBytes("D0 00 88 D8 48 83 C4 18 5B 41 5C 41 5D 41 5E"),
+                DarkPattern = ToBytes("D0 00 B0 01 48 83 C4 18 5B 41 5C 41 5D 41 5E"),
             },
             new()
             {
