@@ -60,6 +60,19 @@ namespace UniHacker
         });
     }";
 
+        const string fetchUserInfo = @"
+fetchUserInfo(accessToken) {
+		return {
+			foreign_key: 'anonymous',
+			name: 'anonymous',
+			email: 'anonymous@gmail.com',
+			primary_org: 'anonymous',
+			identifier: 'anonymous',
+			created_at: 0,
+		}
+	}
+";
+
         public static bool Patch(string exportFolder)
         {
             var authServicePath = Path.Combine(exportFolder, "build/main/services/authService/AuthService.js");
@@ -75,6 +88,11 @@ namespace UniHacker
             UnityHubPatcher.ReplaceMethod(ref licenseServiceContent, @"getValidEntitlementGroups\(\)\s*", getValidEntitlementGroups);
             UnityHubPatcher.ReplaceMethod(ref licenseServiceContent, @"isLicenseValid\(\)\s*", isLicenseValid);
             File.WriteAllText(licenseServicePath, licenseServiceContent);
+
+            var cloudCorePath = Path.Combine(exportFolder, "build/main/services/cloudCore/cloudCore.js");
+            var cloudCoreContent = File.ReadAllText(cloudCorePath);
+            UnityHubPatcher.ReplaceMethod(ref cloudCoreContent, @"fetchUserInfo\(accessToken\)\s*", fetchUserInfo);
+            File.WriteAllText(cloudCorePath, cloudCoreContent);
 
             return true;
         }
