@@ -268,10 +268,10 @@ namespace UniHacker
             },
             new()
             {
-                // 2020.3.34 2020.3.35
-                Version = "2020.3",
-                LightPattern = ToBytes(ToArray("FF 80 B8 91 58 00 00 00 74 5D 48 8D 35"), ToArray("00 41 BF 02 00 00 00 84 C0 0F 84 81")),
-                DarkPattern = ToBytes(ToArray("FF 80 B8 91 58 00 00 00 EB 5D 48 8D 35"), ToArray("00 41 BF 02 00 00 00 84 C0 0F 85 81")),
+                // 2020.2.7 2020.3.34 2020.3.35
+                Version = "2020",
+                LightPattern = ToBytes(ToArray("FF 80 B8 91 58 00 00 00 74 5D 48 8D 35"), ToArray("00 41 BF 02 00 00 00 84 C0 0F 84")),
+                DarkPattern = ToBytes(ToArray("FF 80 B8 91 58 00 00 00 EB 5D 48 8D 35"), ToArray("00 41 BF 02 00 00 00 84 C0 0F 85")),
             },
             new()
             {
