@@ -47,27 +47,23 @@ namespace UniHacker
         {
             var indexes = new List<int>(needles.Count);
 
-            var hasNull = false;
-            foreach (var needleArray in needles)
+            var hasNulls = new bool[needles.Count];
+            for (int i = 0; i < needles.Count; i++)
             {
-                if (needleArray.Contains(null))
-                {
-                    hasNull = true;
-                    break;
-                }
+                var needleArray = needles[i];
+                hasNulls[i] |= needleArray.Contains(null);
             }
 
-            foreach (var needleArray in needles)
+            for (int i = 0; i < needles.Count; i++)
             {
+                var needleArray = needles[i];
+                var hasNull = hasNulls[i];
                 int[]? array = default;
+
                 if (hasNull)
-                {
                     array = FindPatternWithNull(needleArray, haystack).ToArray();
-                }
                 else
-                {
                     array = FindPattern(needleArray.ToList().ConvertAll(x => x.Value).ToArray(), haystack).ToArray();
-                }
 
                 if (array?.Length != 1)
                     break;
