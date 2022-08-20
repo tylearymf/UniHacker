@@ -12,27 +12,27 @@ namespace UniHacker
             return bytes;
         }
 
-        public static byte[] ToArray(string byteStr)
+        public static byte?[] ToArray(string byteStr)
         {
             if (string.IsNullOrEmpty(byteStr))
-                return Array.Empty<byte>();
+                return Array.Empty<byte?>();
 
-            return Regex.Split(byteStr, @"\s+").ToList().ConvertAll(x => Convert.ToByte(x, 16)).ToArray();
+            return Regex.Split(byteStr, @"\s+").ToList().ConvertAll(x => x == "?" ? null : (byte?)Convert.ToByte(x, 16)).ToArray();
         }
 
-        public static List<byte[]> ToBytes(string byteStr)
+        public static List<byte?[]> ToBytes(string byteStr)
         {
             return ToBytes(ToArray(byteStr));
         }
 
-        public static List<byte[]> ToBytes(params byte[] bytes)
+        public static List<byte?[]> ToBytes(params byte?[] bytes)
         {
-            return new List<byte[]>() { bytes };
+            return new List<byte?[]>() { bytes };
         }
 
-        public static List<byte[]> ToBytes(params byte[][] bytesArray)
+        public static List<byte?[]> ToBytes(params byte?[][] bytesArray)
         {
-            var bytesList = new List<byte[]>();
+            var bytesList = new List<byte?[]>();
             foreach (var item in bytesArray)
                 bytesList.Add(item);
 
@@ -357,8 +357,8 @@ namespace UniHacker
                 // 2021.3.8(m1)
                 Version = "2021.3",
                 Architecture = ArchitectureType.MacOS_ARM64,
-                LightPattern = ToBytes(ToArray("F4 02 00 34 A1 D0 00 B0 21 A0 27 91"), ToArray("20 06 00 36 E1 E3 01 91 E0 03 13 AA 2F 0B")),
-                DarkPattern = ToBytes(ToArray("17 00 00 14 A1 D0 00 B0 21 A0 27 91"), ToArray("20 06 00 37 E1 E3 01 91 E0 03 13 AA 2F 0B")),
+                LightPattern = ToBytes(ToArray("F4 02 00 34 ? D0 00 ? 21 ? ? 91"), ToArray("20 06 00 36 E1 E3 01 91 E0 03 13 AA 2F 0B")),
+                DarkPattern = ToBytes(ToArray("17 00 00 14 ? D0 00 ? 21 ? ? 91"), ToArray("20 06 00 37 E1 E3 01 91 E0 03 13 AA 2F 0B")),
             },
             new()
             {
@@ -456,9 +456,9 @@ namespace UniHacker
 
         public ArchitectureType? Architecture { get; set; }
 
-        public List<byte[]> DarkPattern { get; set; }
+        public List<byte?[]> DarkPattern { get; set; }
 
-        public List<byte[]> LightPattern { get; set; }
+        public List<byte?[]> LightPattern { get; set; }
 
         public bool IsValid()
         {

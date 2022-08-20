@@ -1,5 +1,6 @@
 @echo off
-REM 注意版本号必须是长度为3的，比如 1.x、2.x之类的，1.x.x 太长了不用这种，下面 line:~9,3 固定读取长度3的字符串
+
+REM 注意版本号有两种模式 1、正式版必须是长度为3的，比如 1.x、2.x之类的 2、Beta版必须是长度为5的，比如 1.x.x、2.x.x之类的
 
 setlocal enabledelayedexpansion
 set defaultVersion=0.0
@@ -10,6 +11,12 @@ for /f "tokens=*" %%x in (UniHacker.csproj) do (
 	set pattern="<Version>"
 	if "!prefix!"==!pattern! (
 		set version=!line:~9,3!
+		
+		set suffix=!line:~12,1!
+		set pattern="<"
+		if not "!suffix!"==!pattern! (
+			set version=!line:~9,5!
+		)
 	)
 )
 

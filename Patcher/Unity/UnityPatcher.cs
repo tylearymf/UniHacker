@@ -79,7 +79,8 @@ namespace UniHacker
                 var bytes = patchInfo.DarkPattern[i];
                 for (int j = 0; j < bytes.Length; j++)
                 {
-                    fileBytes[patchIndexes![i] + j] = bytes[j];
+                    if (bytes[j].HasValue)
+                        fileBytes[patchIndexes![i] + j] = bytes[j].Value;
                 }
             }
 
