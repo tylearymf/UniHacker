@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text.RegularExpressions;
 
 namespace UniHacker
 {
@@ -72,6 +73,14 @@ fetchUserInfo(accessToken) {
 		}
 	}
 ";
+        const string licensingSdk_init = @"init() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return true;
+        });
+    }";
+        const string licensingSdk_getInstance = @"getInstance() {
+        return null;
+    }";
 
         public static bool Patch(string exportFolder)
         {
@@ -93,6 +102,17 @@ fetchUserInfo(accessToken) {
             var cloudCoreContent = File.ReadAllText(cloudCorePath);
             UnityHubPatcher.ReplaceMethod(ref cloudCoreContent, @"fetchUserInfo\(accessToken\)\s*", fetchUserInfo);
             File.WriteAllText(cloudCorePath, cloudCoreContent);
+
+            var licensingSdkPath = Path.Combine(exportFolder, "build/main/services/licenseService/licensingSdk.js");
+            var licensingSdkContent = File.ReadAllText(licensingSdkPath);
+            UnityHubPatcher.ReplaceMethod(ref licensingSdkContent, @"init\(\)\s*", licensingSdk_init);
+            UnityHubPatcher.ReplaceMethod(ref licensingSdkContent, @"getInstance\(\)\s*", licensingSdk_getInstance);
+            File.WriteAllText(licensingSdkPath, licensingSdkContent);
+
+            var editorappPath = Path.Combine(exportFolder, "build/main/services/editorApp/editorapp.js");
+            var editorappContent = File.ReadAllText(editorappPath);
+            editorappContent = editorappContent.Replace("licensingSdk.getInstance().", "licensingSdk.getInstance()?.");
+            File.WriteAllText(editorappPath, editorappContent);
 
             return true;
         }
