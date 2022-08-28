@@ -5,7 +5,7 @@ Usage
 
 * After selecting the Unity.exe you want to crack on the software, click PATCH to use. At this time, you can double-click Unity.exe to open the project. Submit issue if prompted not supported
 * If you still need to cooperate with Unity Hub, then also select Unity Hub.exe on the software, click PATCH, you can use with Unity Hub
-* Note: **Cracking Unity Hub.exe alone will not open the project, as cracking Unity. Exe is the main thing**
+* Note: **Cracking Unity Hub.exe alone will not open the project, as cracking Unity.exe is the main thing**
 
 ## Windows OS
 
