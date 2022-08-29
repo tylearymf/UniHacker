@@ -12,18 +12,20 @@ namespace UniHacker
         {
             WindowIcon = new WindowIcon(PlatformUtils.IconStream),
             FontFamily = PlatformUtils.FontFamily,
-            ButtonDefinitions = ButtonEnum.Ok,
             ShowInCenter = true,
             CanResize = false,
             MinWidth = 400,
             MinHeight = 160,
         };
 
-        public static Task<ButtonResult> Show(string message)
+        public static Task<ButtonResult> Show(string message, ButtonEnum definitions = ButtonEnum.Ok)
         {
+            var @params = s_Params;
+            @params.ContentMessage = message;
+            @params.ButtonDefinitions = definitions;
+
             var mainView = Views.MainWindow.Instance;
-            s_Params.ContentMessage = message;
-            var messageView = MessageBoxAvalonia.MessageBoxManager.GetMessageBoxStandardWindow(s_Params);
+            var messageView = MessageBoxAvalonia.MessageBoxManager.GetMessageBoxStandardWindow(@params);
 
             if (mainView?.IsVisible ?? false)
                 return messageView.ShowDialog(mainView);

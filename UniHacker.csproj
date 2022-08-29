@@ -8,7 +8,7 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <Authors>tylearymf</Authors>
     <Company>tylearymf</Company>
-    <Version>3.2</Version>
+    <Version>3.3</Version>
     <PackageId>com.tylearymf.unihacker</PackageId>
     <PackageProjectUrl>https:/www.github.com/tylearymf/unihacker</PackageProjectUrl>
     <ApplicationIcon>Assets\avalonia-logo.ico</ApplicationIcon>

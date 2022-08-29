@@ -124,6 +124,9 @@
 
 https://www.github.com/tylearymf/UniHacker</value>
   </data>
+  <data name="Hub_Patch_Option" xml:space="preserve">
+    <value>是否需要登录你自己的账号?</value>
+  </data>
   <data name="Non_Administrator" xml:space="preserve">
     <value>请以管理员身份运行此程序.</value>
   </data>

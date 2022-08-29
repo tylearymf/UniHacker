@@ -124,6 +124,9 @@ If patch fails, please submit Unity binary file or Unity Hub version number on G
 
 https://www.github.com/tylearymf/UniHacker</value>
   </data>
+  <data name="Hub_Patch_Option" xml:space="preserve">
+    <value>Do you need to log in to your own account?</value>
+  </data>
   <data name="Non_Administrator" xml:space="preserve">
     <value>Please run this program as an administrator.</value>
   </data>

@@ -1,5 +1,6 @@
 ﻿using System.IO;
-using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using MessageBoxAvalonia = MessageBox.Avalonia;
 
 namespace UniHacker
 {
@@ -82,26 +83,30 @@ fetchUserInfo(accessToken) {
         return null;
     }";
 
-        public static bool Patch(string exportFolder)
+        public static async Task<bool> Patch(string exportFolder)
         {
-            var authServicePath = Path.Combine(exportFolder, "build/main/services/authService/AuthService.js");
-            var authServiceContent = File.ReadAllText(authServicePath);
-            UnityHubPatcher.ReplaceMethod(ref authServiceContent, @"init\(\)\s*", init);
-            UnityHubPatcher.ReplaceMethod(ref authServiceContent, @"openSignIn\(\)\s*", openSignIn);
-            UnityHubPatcher.ReplaceMethod(ref authServiceContent, @"logInWithAccessToken\(accessToken\)\s*", logInWithAccessToken);
-            UnityHubPatcher.ReplaceMethod(ref authServiceContent, @"static\sisTokenValid\(token\)\s*", isTokenValid);
-            File.WriteAllText(authServicePath, authServiceContent);
+            var result = await MessageBox.Show(Language.GetString("Hub_Patch_Option"), MessageBoxAvalonia.Enums.ButtonEnum.YesNo);
+            if (result == MessageBoxAvalonia.Enums.ButtonResult.No)
+            {
+                var authServicePath = Path.Combine(exportFolder, "build/main/services/authService/AuthService.js");
+                var authServiceContent = File.ReadAllText(authServicePath);
+                UnityHubPatcher.ReplaceMethod(ref authServiceContent, @"init\(\)\s*", init);
+                UnityHubPatcher.ReplaceMethod(ref authServiceContent, @"openSignIn\(\)\s*", openSignIn);
+                UnityHubPatcher.ReplaceMethod(ref authServiceContent, @"logInWithAccessToken\(accessToken\)\s*", logInWithAccessToken);
+                UnityHubPatcher.ReplaceMethod(ref authServiceContent, @"static\sisTokenValid\(token\)\s*", isTokenValid);
+                File.WriteAllText(authServicePath, authServiceContent);
+
+                var cloudCorePath = Path.Combine(exportFolder, "build/main/services/cloudCore/cloudCore.js");
+                var cloudCoreContent = File.ReadAllText(cloudCorePath);
+                UnityHubPatcher.ReplaceMethod(ref cloudCoreContent, @"fetchUserInfo\(accessToken\)\s*", fetchUserInfo);
+                File.WriteAllText(cloudCorePath, cloudCoreContent);
+            }
 
             var licenseServicePath = Path.Combine(exportFolder, "build/main/services/licenseService/licenseService.js");
             var licenseServiceContent = File.ReadAllText(licenseServicePath);
             UnityHubPatcher.ReplaceMethod(ref licenseServiceContent, @"getValidEntitlementGroups\(\)\s*", getValidEntitlementGroups);
             UnityHubPatcher.ReplaceMethod(ref licenseServiceContent, @"isLicenseValid\(\)\s*", isLicenseValid);
             File.WriteAllText(licenseServicePath, licenseServiceContent);
-
-            var cloudCorePath = Path.Combine(exportFolder, "build/main/services/cloudCore/cloudCore.js");
-            var cloudCoreContent = File.ReadAllText(cloudCorePath);
-            UnityHubPatcher.ReplaceMethod(ref cloudCoreContent, @"fetchUserInfo\(accessToken\)\s*", fetchUserInfo);
-            File.WriteAllText(cloudCorePath, cloudCoreContent);
 
             var licensingSdkPath = Path.Combine(exportFolder, "build/main/services/licenseService/licensingSdk.js");
             var licensingSdkContent = File.ReadAllText(licensingSdkPath);
