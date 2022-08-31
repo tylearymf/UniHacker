@@ -39,7 +39,7 @@ namespace UniHacker
                     PatchStatus = PatchStatus.Support;
                 }
 
-                if (PatchStatus == PatchStatus.NotSupport)
+                if (PlatformUtils.IsWindows() && PatchStatus == PatchStatus.NotSupport)
                 {
                     var isSpecial = Regex.IsMatch(FileVersion, @"\d+\.\d+.\d+f\d+c\d+(.*)?") ||
                                     File.Exists(Path.Combine(RootPath, "hasp_rt.exe")) ||
