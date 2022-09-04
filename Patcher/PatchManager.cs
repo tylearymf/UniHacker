@@ -17,7 +17,7 @@ namespace UniHacker
             var fileName = Path.GetFileName(filePath);
             if (fileName == "Unity" + PlatformUtils.GetExtension())
                 return new UnityPatcher(filePath);
-            else if (string.Compare(fileName.Replace(" ", ""), "UnityHub" + PlatformUtils.GetExtension(), true) == 0)
+            else if (fileName.Replace(" ", "").Contains("unityhub", StringComparison.OrdinalIgnoreCase))
                 return new UnityHubPatcher(filePath);
             else
                 return new DefaultPatcher(filePath);

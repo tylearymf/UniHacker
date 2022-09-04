@@ -381,9 +381,45 @@ namespace UniHacker
         {
             new()
             {
-                Version = "2021.3.0",
-                LightPattern = ToBytes(ToArray("74 67 48 8B 35 9C 82 23 01 48 8D 0D"), ToArray("84 36 01 00 00 48 8D B4 24 A8")),
-                DarkPattern = ToBytes(ToArray("EB 67 48 8B 35 9C 82 23 01 48 8D 0D"), ToArray("85 36 01 00 00 48 8D B4 24 A8")),
+                // 2017.4.40
+                Version = "2017",
+                LightPattern = ToBytes(ToArray("3C 7A 46 FF E9 78 FF FF FF 90 66 0F 1F 44 00 00 41 57 41 56 41 55")),
+                DarkPattern = ToBytes(ToArray("3C 7A 46 FF E9 78 FF FF FF 90 66 0F 1F 44 00 00 B8 01 00 00 00 C3")),
+            },
+            new()
+            {
+                // 2018.4.36
+                Version = "2018",
+                LightPattern = ToBytes(ToArray("24 4F E9 BA FE FF FF 90 0F 1F 84 00 00 00 00 00 41 57 41 56 41 55")),
+                DarkPattern = ToBytes(ToArray("24 4F E9 BA FE FF FF 90 0F 1F 84 00 00 00 00 00 B8 01 00 00 00 C3")),
+            },
+            new()
+            {
+                // 2019.4.40
+                Version = "2019",
+                LightPattern = ToBytes(ToArray("74 60 48 8D 35 ? ? ? 06 48 8D 0D"), ToArray("84 F6 01 00 00 48 8D 74 24 30")),
+                DarkPattern = ToBytes(ToArray("EB 60 48 8D 35 ? ? ? 06 48 8D 0D"), ToArray("85 F6 01 00 00 48 8D 74 24 30")),
+            },
+            new()
+            {
+                // 2020.3.38
+                Version = "2020",
+                LightPattern = ToBytes(ToArray("74 60 48 8B 35 ? ? ? 01 48 8D 0D"), ToArray("84 78 01 00 00 48 8D 74 24 78")),
+                DarkPattern = ToBytes(ToArray("EB 60 48 8D 35 ? ? ? 01 48 8D 0D"), ToArray("85 78 01 00 00 48 8D 74 24 78")),
+            },
+            new()
+            {
+                // 2021.3.7
+                Version = "2021",
+                LightPattern = ToBytes(ToArray("74 67 48 8B 35 ? ? ? 01 48 8D 0D"), ToArray("84 36 01 00 00 48 8D B4 24 A8")),
+                DarkPattern = ToBytes(ToArray("EB 67 48 8B 35 ? ? ? 01 48 8D 0D"), ToArray("85 36 01 00 00 48 8D B4 24 A8")),
+            },
+            new()
+            {
+                // 2022.1.15
+                Version = "2022",
+                LightPattern = ToBytes(ToArray("0F 84 A7 00 00 00 48 8B 35 D8 CE 27"), ToArray("84 36 01 00 00 48 8D B4 24 A8")),
+                DarkPattern = ToBytes(ToArray("E9 A8 00 00 00 00 48 8B 35 D8 CE 27"), ToArray("85 36 01 00 00 48 8D B4 24 A8")),
             },
         };
 

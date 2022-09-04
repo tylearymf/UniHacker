@@ -73,7 +73,11 @@ namespace UniHacker
             if (patchResult)
             {
                 if (Directory.Exists(asarUnpackPath))
-                    CopyDirectory(asarUnpackPath, exportFolder, true);
+                {
+                    var result = CopyDirectory(asarUnpackPath, exportFolder, true);
+                    if (!result)
+                        await MessageBox.Show(Language.GetString("Hub_copy_error1", asarUnpackPath, exportFolder));
+                }
 
                 if (File.Exists(asarPath) && !File.Exists(asarBackupPath))
                     File.Move(asarPath, asarBackupPath);

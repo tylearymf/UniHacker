@@ -124,6 +124,15 @@ If patch fails, please submit Unity binary file or Unity Hub version number on G
 
 https://www.github.com/tylearymf/UniHacker</value>
   </data>
+  <data name="Hub_copy_error1" xml:space="preserve">
+    <value>Failed to copy files. Please manually copy files! '{0}' -&gt; '{1}'</value>
+  </data>
+  <data name="Hub_patch_error1" xml:space="preserve">
+    <value>The 'app.asar' file could not be found!</value>
+  </data>
+  <data name="Hub_patch_error2" xml:space="preserve">
+    <value>Unable to detect the version number of the Unity Hub!</value>
+  </data>
   <data name="Hub_Patch_Option" xml:space="preserve">
     <value>Do you need to log in to your own account?</value>
   </data>
@@ -168,6 +177,9 @@ https://www.github.com/tylearymf/UniHacker</value>
   </data>
   <data name="Support" xml:space="preserve">
     <value>Support Patch</value>
+  </data>
+  <data name="Unity_patch_error1" xml:space="preserve">
+    <value>Unable to detect the version number of the Unity!</value>
   </data>
   <data name="Unknown" xml:space="preserve">
     <value>Unknown</value>

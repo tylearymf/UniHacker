@@ -47,15 +47,15 @@ Usage
 
 ### Supported Unity Versions
 
-|      2021.3.0      |      |      |      |      |      |
-| :----------------: | :--: | :--: | :--: | :--: | :--: |
-| :white_check_mark: |      |      |      |      |      |
+|       2022.1       |       2021.x       |       2020.x       |       2019.x       |       2018.x       |       2017.x       |
+| :----------------: | :----------------: | :----------------: | :----------------: | :----------------: | :----------------: |
+| :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 ### Supported UnityHub Versions
 
-|    3.x     |    2.x     |      |      |      |      |
-| :--------: | :--------: | ---- | ---- | ---- | ---- |
-| :question: | :question: |      |      |      |      |
+|        3.x         |        2.x         |      |      |      |      |
+| :----------------: | :----------------: | ---- | ---- | ---- | ---- |
+| :white_check_mark: | :white_check_mark: |      |      |      |      |
 
 ## Legal Disclaimer
 

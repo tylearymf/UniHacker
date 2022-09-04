@@ -124,6 +124,15 @@
 
 https://www.github.com/tylearymf/UniHacker</value>
   </data>
+  <data name="Hub_copy_error1" xml:space="preserve">
+    <value>拷贝文件失败，请手动拷贝! '{0}' -&gt; '{1}'</value>
+  </data>
+  <data name="Hub_patch_error1" xml:space="preserve">
+    <value>找不到 'app.asar' 文件！</value>
+  </data>
+  <data name="Hub_patch_error2" xml:space="preserve">
+    <value>无法识别Unity Hub的版本号！</value>
+  </data>
   <data name="Hub_Patch_Option" xml:space="preserve">
     <value>是否需要登录你自己的账号?</value>
   </data>
@@ -168,6 +177,9 @@ https://www.github.com/tylearymf/UniHacker</value>
   </data>
   <data name="Support" xml:space="preserve">
     <value>支持破解</value>
+  </data>
+  <data name="Unity_patch_error1" xml:space="preserve">
+    <value>无法识别Unity的版本号！</value>
   </data>
   <data name="Unknown" xml:space="preserve">
     <value>未知</value>

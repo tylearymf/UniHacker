@@ -29,12 +29,14 @@ namespace UniHacker
         static void Test()
         {
 #if DEBUG
+            var versionName = PlatformUtils.TryGetVersionOfUnity("D:/Unity");
+
             var stopwatch = new Stopwatch();
             stopwatch.Start();
             Console.WriteLine($"Start Search Pattern.");
 
             var filePath = "D:/Unity";
-            var version = "2020.2.7";
+            var version = "2018.1.15";
             var architecture = MachineArchitecture.GetArchitectureType(filePath);
             var patchInfo = UnityPatchInfos.FindPatchInfo(version, architecture);
             var fileBytes = File.ReadAllBytes(filePath);
