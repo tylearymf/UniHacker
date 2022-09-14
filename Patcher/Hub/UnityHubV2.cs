@@ -38,8 +38,8 @@ namespace UniHacker
             var licenseClientContent = File.ReadAllText(licenseClientPath);
             var authContent = File.ReadAllText(authPath);
 
-            UnityHubPatcher.ReplaceMehthodBody(ref licenseClientContent, getLicenseInfoBody, @"getLicenseInfo\(\w+\)\s*{(?<body>.*?return.*?)}");
-            UnityHubPatcher.ReplaceMehthodBody(ref authContent, getDefaultUserInfoBody, @"getDefaultUserInfo\(\)\s*{(?<body>.*?return.*?};.*?)}");
+            UnityHubPatcher.ReplaceMethodBody(ref licenseClientContent, "getLicenseInfo", getLicenseInfoBody);
+            UnityHubPatcher.ReplaceMethodBody(ref authContent, "getDefaultUserInfo", getDefaultUserInfoBody);
 
             File.WriteAllText(licenseClientPath, licenseClientContent);
             File.WriteAllText(authPath, authContent);
