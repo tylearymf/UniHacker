@@ -83,7 +83,7 @@ namespace UniHacker
 
         public static async Task<bool> Patch(string exportFolder)
         {
-            var result = await MessageBox.Show(Language.GetString("Hub_Patch_Option"), MessageBoxAvalonia.Enums.ButtonEnum.YesNo);
+            var result = await MessageBox.Show(Language.GetString("Hub_Patch_Option_Login"), MessageBoxAvalonia.Enums.ButtonEnum.YesNo);
             if (result == MessageBoxAvalonia.Enums.ButtonResult.No)
             {
                 var authServicePath = Path.Combine(exportFolder, "build/main/services/authService/AuthService.js");
@@ -98,6 +98,15 @@ namespace UniHacker
                 var cloudCoreContent = File.ReadAllText(cloudCorePath);
                 UnityHubPatcher.ReplaceMethodBody(ref cloudCoreContent, @"fetchUserInfo", fetchUserInfo);
                 File.WriteAllText(cloudCorePath, cloudCoreContent);
+            }
+
+            result = await MessageBox.Show(Language.GetString("Hub_Patch_Option_DisableUpdate"), MessageBoxAvalonia.Enums.ButtonEnum.YesNo);
+            if (result == MessageBoxAvalonia.Enums.ButtonResult.Yes)
+            {
+                var defaultLocalConfigPath = Path.Combine(exportFolder, "build/common/DefaultLocalConfig.js");
+                var defaultLocalConfigContent = File.ReadAllText(defaultLocalConfigPath);
+                defaultLocalConfigContent = defaultLocalConfigContent.Replace("DisableAutoUpdate]: false,", "DisableAutoUpdate]: true,");
+                File.WriteAllText(defaultLocalConfigPath, defaultLocalConfigContent);
             }
 
             var licenseServicePath = Path.Combine(exportFolder, "build/main/services/licenseService/licenseService.js");

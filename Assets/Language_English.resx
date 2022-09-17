@@ -133,7 +133,10 @@ https://www.github.com/tylearymf/UniHacker</value>
   <data name="Hub_patch_error2" xml:space="preserve">
     <value>Unable to detect the version number of the Unity Hub!</value>
   </data>
-  <data name="Hub_Patch_Option" xml:space="preserve">
+  <data name="Hub_Patch_Option_DisableUpdate" xml:space="preserve">
+    <value>Do you need to turn off automatic update?</value>
+  </data>
+  <data name="Hub_Patch_Option_Login" xml:space="preserve">
     <value>Do you need to log in to your own account?</value>
   </data>
   <data name="Non_Administrator" xml:space="preserve">

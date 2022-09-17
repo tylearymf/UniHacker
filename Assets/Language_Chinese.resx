@@ -133,7 +133,10 @@ https://www.github.com/tylearymf/UniHacker</value>
   <data name="Hub_patch_error2" xml:space="preserve">
     <value>无法识别Unity Hub的版本号！</value>
   </data>
-  <data name="Hub_Patch_Option" xml:space="preserve">
+  <data name="Hub_Patch_Option_DisableUpdate" xml:space="preserve">
+    <value>是否需要关闭自动更新？</value>
+  </data>
+  <data name="Hub_Patch_Option_Login" xml:space="preserve">
     <value>是否需要登录你自己的账号?</value>
   </data>
   <data name="Non_Administrator" xml:space="preserve">
