@@ -8,7 +8,6 @@ namespace UniHacker
     {
         public const string English = "English";
         public const string Chinese = "Chinese";
-        public const string DefaultLanguage = English;
 
         static ResourceManager? s_ResourceManager;
 

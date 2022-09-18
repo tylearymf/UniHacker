@@ -8,5 +8,6 @@ namespace UniHacker.ViewModels
         public string Version => Language.GetString(nameof(Version));
         public string Status => Language.GetString(nameof(Status));
         public string Patch_btn => Language.GetString(nameof(Patch_btn));
+        public string Revert_btn => Language.GetString(nameof(Revert_btn));
     }
 }

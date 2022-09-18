@@ -15,11 +15,8 @@ namespace UniHacker
         internal static int s_MajorVersion;
         internal static int s_MinorVersion;
 
-        public static void TryGenerate(int majorVersion, int minorVersion)
+        static string GetLicensePath(int majorVersion, int minorVersion)
         {
-            s_MajorVersion = majorVersion;
-            s_MinorVersion = minorVersion;
-
             var commonAppData = string.Empty;
             switch (PlatformUtils.GetPlatformType())
             {
@@ -57,6 +54,15 @@ namespace UniHacker
             else
                 ulfFilePath = Path.Combine(unityLicensingPath, "Unity_lic.ulf");
 
+            return ulfFilePath;
+        }
+
+        public static void TryGenerate(int majorVersion, int minorVersion)
+        {
+            s_MajorVersion = majorVersion;
+            s_MinorVersion = minorVersion;
+
+            var ulfFilePath = GetLicensePath(majorVersion, minorVersion);
             if (File.Exists(ulfFilePath))
                 File.Delete(ulfFilePath);
 
@@ -108,6 +114,13 @@ namespace UniHacker
             var contents = File.ReadAllText(ulfFilePath).Replace(" />", "/>");
             contents = contents.Replace("<MachineBindings/>", "<MachineBindings></MachineBindings>");
             File.WriteAllText(ulfFilePath, contents);
+        }
+
+        public static void TryRemove(int majorVersion, int minorVersion)
+        {
+            var ulfFilePath = GetLicensePath(majorVersion, minorVersion);
+            if (File.Exists(ulfFilePath))
+                File.Delete(ulfFilePath);
         }
     }
 

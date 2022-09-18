@@ -4,7 +4,7 @@
         xmlns:vm="using:UniHacker.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" Width="520" Height="250" MaxWidth="520" MaxHeight="250" CanResize="False"
+        mc:Ignorable="d" Width="520" Height="270" MaxWidth="520" MaxHeight="270" CanResize="False"
         x:Class="UniHacker.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico">
 
@@ -24,25 +24,25 @@
               HorizontalAlignment="Stretch"
               VerticalContentAlignment="Center"
               HorizontalContentAlignment="Center"
-              Margin="350,-85,0,50"/>
-      <TextBlock Text="{Binding Version}" VerticalAlignment="Top" Margin="0,70"/>
+              Margin="350,-95,0,60"/>
+      <TextBlock Text="{Binding Version}" VerticalAlignment="Top" Margin="0,75"/>
       <TextBox Name="Version"
                VerticalAlignment="Top"
                HorizontalAlignment="Left"
-               Margin="70,65,70,0"
+               Margin="70,70,70,0"
                Width="145"
                IsReadOnly="True"/>
-      <TextBlock Text="{Binding Status}" VerticalAlignment="Top" Margin="170,70" HorizontalAlignment="Right" />
+      <TextBlock Text="{Binding Status}" VerticalAlignment="Top" Margin="170,75" HorizontalAlignment="Right" />
       <TextBox Name="Status"
                VerticalAlignment="Top"
                HorizontalAlignment="Left"
-               Margin="350,65,0,0"
+               Margin="350,70,0,0"
                Width="145"
                IsReadOnly="True"/>
       <TextBox Name="RichText"
                Text="{Binding Description}"
                VerticalAlignment="Bottom"
-               Margin="0,-125,150,0"
+               Margin="0,-135,150,0"
                TextWrapping="Wrap"
                IsReadOnly="True"/>
       <Button Name="PatchBtn"
@@ -52,7 +52,15 @@
               HorizontalContentAlignment="Center"
               VerticalContentAlignment="Center"
               FontSize="30"
-              Margin="350,100,0,0" />
+              Margin="350,110,0,30" />
+       <Button Name="RevertBtn"
+              Content="{Binding Revert_btn}"
+              VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Center"
+              VerticalContentAlignment="Center"
+              FontSize="12"
+              Margin="350,220,0,0" />
       <ProgressBar Name="ProgressBar"
                    VerticalAlignment="Bottom"
                    Margin="-10,10,-10,-10"/>

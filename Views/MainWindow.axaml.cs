@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using MessageBox.Avalonia.Enums;
 
 namespace UniHacker.Views
 {
@@ -10,6 +11,7 @@ namespace UniHacker.Views
     {
         public static MainWindow? Instance { private set; get; }
 
+        string? filePath;
         Patcher? patcher;
 
         public MainWindow()
@@ -46,10 +48,12 @@ namespace UniHacker.Views
 
             SelectBtn.Click += SelectBtn_Click;
             PatchBtn.Click += PatchBtn_Click;
+            RevertBtn.Click += RevertBtn_Click;
         }
 
         void UpdateFilePath(string filePath)
         {
+            this.filePath = filePath;
             patcher = PatchManager.GetPatcher(filePath, PlatformUtils.GetPlatformType());
             var status = patcher?.PatchStatus ?? PatchStatus.Unknown;
 
@@ -57,6 +61,7 @@ namespace UniHacker.Views
             Version.Text = patcher?.FileVersion ?? string.Empty;
             Status.Text = Language.GetString(status.ToString());
             PatchBtn.IsEnabled = status == PatchStatus.Support;
+            RevertBtn.IsEnabled = status == PatchStatus.Patched;
 
             if (patcher != null)
             {
@@ -77,17 +82,46 @@ namespace UniHacker.Views
             if (patcher == null)
                 return;
 
-            PatchBtn.IsEnabled = false;
-
             try
             {
+                PatchBtn.IsEnabled = false;
+
                 (bool success, string errorMsg) = await patcher.ApplyPatch(progress => ProgressBar.Value = (int)(progress * 100));
                 var msg = Language.GetString(success ? "Patch_success" : "Patch_fail");
                 _ = await MessageBox.Show(string.Format("{0}\n\n{1}", msg, errorMsg));
+
+                UpdateFilePath(filePath!);
             }
             catch (Exception ex)
             {
+                PatchBtn.IsEnabled = true;
                 _ = await MessageBox.Show(ex.ToString());
+            }
+        }
+
+        async void RevertBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (patcher == null)
+                return;
+
+            var result = await MessageBox.Show(Language.GetString("Revert_Desc"), ButtonEnum.YesNo);
+            if (result == ButtonResult.Yes)
+            {
+                try
+                {
+                    RevertBtn.IsEnabled = false;
+
+                    (bool success, string errorMsg) = await patcher.RemovePatch(progress => ProgressBar.Value = (int)(progress * 100));
+                    var msg = Language.GetString(success ? "Revert_success" : "Revert_fail");
+                    _ = await MessageBox.Show(string.Format("{0}\n\n{1}", msg, errorMsg));
+
+                    UpdateFilePath(filePath!);
+                }
+                catch (Exception ex)
+                {
+                    RevertBtn.IsEnabled = true;
+                    _ = await MessageBox.Show(ex.ToString());
+                }
             }
         }
 

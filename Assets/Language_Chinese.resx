@@ -166,6 +166,18 @@ https://www.github.com/tylearymf/UniHacker</value>
   <data name="Process_occupy" xml:space="preserve">
     <value>{0} 正在运行中，可能会破解失败！</value>
   </data>
+  <data name="Revert_btn" xml:space="preserve">
+    <value>还 原</value>
+  </data>
+  <data name="Revert_Desc" xml:space="preserve">
+    <value>是否移除破解补丁？</value>
+  </data>
+  <data name="Revert_fail" xml:space="preserve">
+    <value>移除失败!</value>
+  </data>
+  <data name="Revert_success" xml:space="preserve">
+    <value>移除成功！</value>
+  </data>
   <data name="Select" xml:space="preserve">
     <value>选择</value>
   </data>

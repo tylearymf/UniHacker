@@ -46,7 +46,7 @@ namespace UniHacker
             throw new NotImplementedException();
         }
 
-        public virtual async Task<(bool success, string errorMsg)> RemovePatch()
+        public virtual async Task<(bool success, string errorMsg)> RemovePatch(Action<double> progress)
         {
             await Task.Yield();
             throw new NotImplementedException();

@@ -80,7 +80,7 @@ namespace UniHacker
                 for (int j = 0; j < bytes.Length; j++)
                 {
                     if (bytes[j].HasValue)
-                        fileBytes[patchIndexes![i] + j] = bytes[j].Value;
+                        fileBytes[patchIndexes![i] + j] = bytes[j]!.Value;
                 }
             }
 
@@ -121,6 +121,37 @@ namespace UniHacker
 
             // 创建许可证
             LicensingInfo.TryGenerate(MajorVersion, MinorVersion);
+
+            return (true, string.Empty);
+        }
+
+        public async override Task<(bool success, string errorMsg)> RemovePatch(Action<double> progress)
+        {
+            if (patchInfo == null || patchIndexes?.Count == 0)
+                return (false, string.Empty);
+
+            progress(0.2F);
+            await Task.Delay(200);
+
+            var fileBakPath = FilePath + ".bak";
+            if (File.Exists(fileBakPath))
+                File.Move(fileBakPath, FilePath, true);
+
+            progress(0.5F);
+            await Task.Delay(200);
+
+            var licensingFilePath = Path.Combine(RootPath, "Data/Resources/Licensing/Client/Unity.Licensing.Client" + PlatformUtils.GetExtension());
+            var licensingFileBakPath = licensingFilePath + ".bak";
+            if (File.Exists(licensingFileBakPath))
+                File.Move(licensingFileBakPath, licensingFilePath);
+
+            progress(0.7F);
+            await Task.Delay(200);
+
+            LicensingInfo.TryRemove(MajorVersion, MinorVersion);
+
+            progress(1F);
+            await Task.Delay(200);
 
             return (true, string.Empty);
         }
