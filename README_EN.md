@@ -1,5 +1,16 @@
 # UniHacker
-Patch all versions of Unity3D and UnityHub. 
+
+[![Latest Version](https://img.shields.io/github/v/release/tylearymf/UniHacker?color=%23FF3300)](https://github.com/tylearymf/UniHacker/releases/latest)
+[![License](https://img.shields.io/github/license/tylearymf/UniHacker)](https://github.com/tylearymf/UniHacker/blob/main/LICENSE)
+[![Latest](https://img.shields.io/github/downloads/tylearymf/UniHacker/latest/total)](https://github.com/tylearymf/UniHacker/releases/latest)
+[![Total Download Count](https://img.shields.io/github/downloads/tylearymf/UniHacker/total)](https://github.com/tylearymf/UniHacker/releases)
+![Star Count](https://img.shields.io/github/stars/tylearymf/UniHacker?style=social)
+![Fork Count](https://img.shields.io/github/forks/tylearymf/UniHacker?style=social)
+![Support Platforms](https://img.shields.io/powershellgallery/p/Pester)
+<!--[![Open Issues](https://img.shields.io/github/issues/tylearymf/UniHacker)](https://github.com/tylearymf/UniHacker/issues)
+[![Close Issues](https://img.shields.io/github/issues-closed/tylearymf/UniHacker)](https://github.com/tylearymf/UniHacker/issues?q=is%3Aissue+is%3Aclosed)-->
+
+**Patch all versions of Unity3D and UnityHub.**
 
 Usage
 
