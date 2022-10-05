@@ -362,10 +362,18 @@ namespace UniHacker
             new()
             {
                 // 2021.3.8(m1)
-                Version = "2021.3",
+                Version = "2021.3.8",
                 Architecture = ArchitectureType.MacOS_ARM64,
                 LightPattern = ToBytes(ToArray("F4 02 00 34 ? D0 00 ? 21 ? ? 91"), ToArray("20 06 00 36 E1 E3 01 91 E0 03 13 AA 2F 0B")),
                 DarkPattern = ToBytes(ToArray("17 00 00 14 ? D0 00 ? 21 ? ? 91"), ToArray("20 06 00 37 E1 E3 01 91 E0 03 13 AA 2F 0B")),
+            },
+            new()
+            {
+                // 2021.3.10(m1)、2021.3.11(m1)
+                Version = "2021.3",
+                Architecture = ArchitectureType.MacOS_ARM64,
+                LightPattern = ToBytes(ToArray("F4 02 00 34 ? ? 00 ? 21 ? ? 91"), ToArray("20 06 00 36 E1 E3 01 91 E0 03 13 AA 2F 0B")),
+                DarkPattern = ToBytes(ToArray("17 00 00 14 ? ? 00 ? 21 ? ? 91"), ToArray("20 06 00 37 E1 E3 01 91 E0 03 13 AA 2F 0B")),
             },
             new()
             {
@@ -483,8 +491,13 @@ namespace UniHacker
 
         public static UnityPatchInfo? FindPatchInfo(string version, ArchitectureType architectureType)
         {
+            var match = Regex.Match(version, @"(?<version>\d+(\.\d+)?(\.\d+)?)");
+            if (!match.Success)
+                return null;
+
+            version = match.Groups["version"].Value;
             var pathInfos = GetPatchInfos(architectureType);
-            var infos = pathInfos?.FindAll(x => version.StartsWith(x.Version) && x.Architecture == architectureType);
+            var infos = pathInfos?.FindAll(x => x.Architecture == architectureType && x.IsApproximateVersion(version));
             return infos?.OrderByDescending(x => x.Version.Length).FirstOrDefault();
         }
 
@@ -514,6 +527,37 @@ namespace UniHacker
         public bool IsValid()
         {
             return Architecture != ArchitectureType.UnKnown && DarkPattern != null && LightPattern != null;
+        }
+
+        public bool IsApproximateVersion(string version)
+        {
+            var currentVersionSplits = Version.Split(".");
+            var paramVersionSplits = version.Split(".");
+
+            var currentMajor = currentVersionSplits[0];
+            var currentMinor = currentVersionSplits.Length > 1 ? currentVersionSplits[1] : string.Empty;
+            var currentBuild = currentVersionSplits.Length > 2 ? currentVersionSplits[2] : string.Empty;
+
+            var paramMajor = paramVersionSplits[0];
+            var paramMinor = paramVersionSplits.Length > 1 ? paramVersionSplits[1] : string.Empty;
+            var paramBuild = paramVersionSplits.Length > 2 ? paramVersionSplits[2] : string.Empty;
+
+            if (currentMajor != paramMajor)
+                return false;
+
+            if (currentMinor != string.Empty && paramMinor == string.Empty)
+                return false;
+
+            if (currentMinor != string.Empty && paramMinor != string.Empty && currentMinor != paramMinor)
+                return false;
+
+            if (currentBuild != string.Empty && paramBuild == string.Empty)
+                return false;
+
+            if (currentBuild != string.Empty && paramBuild != string.Empty && currentBuild != paramBuild)
+                return false;
+
+            return true;
         }
 
         public override string ToString()
