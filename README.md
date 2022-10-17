@@ -18,6 +18,8 @@
 
 2. UnityHub国际版下载地址：https://unity.com/download#how-get-started
 
+3. Github 国际版下载地址：https://github.com/AlianBlank/download.unity.com
+
 * Windows：https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.exe
 * Mac：https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.dmg
 * Linux：https://docs.unity3d.com/hub/manual/InstallHub.html#install-hub-linux
