@@ -165,8 +165,9 @@ namespace UniHacker
                 if (removeFeatures.Contains(i))
                     continue;
 
-                features.Add(new XmlValue() { Value = i.ToString() });
+                features.Add(new XmlValue(i));
             }
+            features.Add(new XmlValue((int)FeatureID.PS5));
             Features = features.ToArray();
 
             GenerateSerialNumber();
@@ -220,6 +221,10 @@ namespace UniHacker
     {
         [XmlAttribute]
         public string Value = "";
+
+        public XmlValue() { }
+        public XmlValue(string value) => Value = value;
+        public XmlValue(int value) => Value = value.ToString();
     }
 
     public class XmlEmpty
