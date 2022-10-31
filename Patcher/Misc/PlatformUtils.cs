@@ -277,10 +277,20 @@ namespace UniHacker
                     var names = output.Split(':');
                     var userName = names[0];
 
-                    if (string.IsNullOrWhiteSpace(userName))
-                        throw new Exception($"error get linux user name. output:{output}");
+                    startInfo = new ProcessStartInfo("/bin/bash", $"-c id \"{userName}\"")
+                    {
+                        RedirectStandardError = true
+                    };
+                    process = Process.Start(startInfo);
+                    await process!.WaitForExitAsync();
+                    if (process.ExitCode != 0)
+                    {
+                        throw new Exception($"error linux user name. errorCode:{process.ExitCode}. errorMsg:{process.StandardError.ReadToEnd()}");
+                    }
                     else
+                    {
                         return userName;
+                    }
                 }
             }
             catch (Exception ex)
