@@ -5,6 +5,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -15,7 +16,7 @@ namespace UniHacker
         internal static int s_MajorVersion;
         internal static int s_MinorVersion;
 
-        static string GetLicensePath(int majorVersion, int minorVersion)
+        static async Task<string> GetLicensePath(int majorVersion, int minorVersion)
         {
             var commonAppData = string.Empty;
             switch (PlatformUtils.GetPlatformType())
@@ -27,17 +28,12 @@ namespace UniHacker
                     commonAppData = "/Library/Application Support";
                     break;
                 case PlatformType.Linux:
-                    var directories = Directory.GetDirectories("/home");
-                    if (directories.Length > 0)
                     {
-                        var tempName = Path.GetFileName(directories[0]);
-                        commonAppData = $"/home/{tempName}/.local/share/unity3d";
+                        var userName = await PlatformUtils.GetLinuxUserName();
+                        commonAppData = $"/home/{userName}/.local/share/unity3d";
+
                         if (!Directory.Exists(commonAppData))
                             Directory.CreateDirectory(commonAppData);
-                    }
-                    else
-                    {
-                        throw new Exception("home directory is null");
                     }
                     break;
             }
@@ -57,12 +53,12 @@ namespace UniHacker
             return ulfFilePath;
         }
 
-        public static void TryGenerate(int majorVersion, int minorVersion)
+        public static async void TryGenerate(int majorVersion, int minorVersion)
         {
             s_MajorVersion = majorVersion;
             s_MinorVersion = minorVersion;
 
-            var ulfFilePath = GetLicensePath(majorVersion, minorVersion);
+            var ulfFilePath = await GetLicensePath(majorVersion, minorVersion);
             if (File.Exists(ulfFilePath))
                 File.Delete(ulfFilePath);
 
@@ -116,9 +112,9 @@ namespace UniHacker
             File.WriteAllText(ulfFilePath, contents);
         }
 
-        public static void TryRemove(int majorVersion, int minorVersion)
+        public static async void TryRemove(int majorVersion, int minorVersion)
         {
-            var ulfFilePath = GetLicensePath(majorVersion, minorVersion);
+            var ulfFilePath = await GetLicensePath(majorVersion, minorVersion);
             if (File.Exists(ulfFilePath))
                 File.Delete(ulfFilePath);
         }

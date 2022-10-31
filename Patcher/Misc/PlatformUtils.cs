@@ -255,6 +255,41 @@ namespace UniHacker
 
             return string.Empty;
         }
+
+        public static async Task<string> GetLinuxUserName()
+        {
+            try
+            {
+                var startInfo = new ProcessStartInfo("/bin/bash", "-c \"getent passwd | grep \"/home\" | grep -v \"nologin\"\"")
+                {
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                };
+                var process = Process.Start(startInfo);
+                await process!.WaitForExitAsync();
+                if (process.ExitCode != 0)
+                {
+                    throw new Exception($"error get linux user name. errorCode:{process.ExitCode}. errorMsg:{process.StandardError.ReadToEnd()}");
+                }
+                else
+                {
+                    var output = await process.StandardOutput.ReadToEndAsync();
+                    var names = output.Split(':');
+                    var userName = names[0];
+
+                    if (string.IsNullOrWhiteSpace(userName))
+                        throw new Exception($"error get linux user name. output:{output}");
+                    else
+                        return userName;
+                }
+            }
+            catch (Exception ex)
+            {
+                await MessageBox.Show(ex.ToString());
+            }
+
+            return string.Empty;
+        }
     }
 
     internal enum PlatformType
