@@ -65,9 +65,10 @@ namespace UniHacker
                 else
                     array = FindPattern(needleArray.ToList().ConvertAll(x => x.Value).ToArray(), haystack).ToArray();
 
-                if (array?.Length != 1)
-                    break;
-                indexes.Add(array[0]);
+                if (array?.Length == 1)
+                    indexes.Add(array[0]);
+                else
+                    System.Diagnostics.Debug.WriteLine($"Index:{i}. match len:{array?.Length}");
             }
 
             return indexes;

@@ -350,10 +350,18 @@ namespace UniHacker
             new()
             {
                 // 2021.3.10(m1)、2021.3.11(m1)
-                Version = "2021.3",
+                Version = "2021.3.10 ; 2021.3.11",
                 Architecture = ArchitectureType.MacOS_ARM64,
                 LightPattern = ToBytes(ToArray("F4 02 00 34 ? ? 00 ? 21 ? ? 91"), ToArray("20 06 00 36 E1 E3 01 91 E0 03 13 AA 2F 0B")),
                 DarkPattern = ToBytes(ToArray("17 00 00 14 ? ? 00 ? 21 ? ? 91"), ToArray("20 06 00 37 E1 E3 01 91 E0 03 13 AA 2F 0B")),
+            },
+            new()
+            {
+                // 2021.3.12(m1)
+                Version = "2021.3",
+                Architecture = ArchitectureType.MacOS_ARM64,
+                LightPattern = ToBytes(ToArray("14 68 68 38 F4 02 00 34 ? ? 00 ? 21 ? ? 91"), ToArray("20 06 00 36 E1 E3 01 91 E0 03 13 AA 2F 0B")),
+                DarkPattern = ToBytes(ToArray("14 68 68 38 17 00 00 14 ? ? 00 ? 21 ? ? 91"), ToArray("20 06 00 37 E1 E3 01 91 E0 03 13 AA 2F 0B")),
             },
             new()
             {
@@ -366,10 +374,18 @@ namespace UniHacker
             new()
             {
                 // 2022.1.18(m1)
-                Version = "2022",
+                Version = "2022.1.18",
                 Architecture = ArchitectureType.MacOS_ARM64,
                 LightPattern = ToBytes(ToArray("14 05 00 34 21 ? 00 ? 21 ? ?"), ToArray("20 06 00 36 E1 E3 01 91 E0 03 13")),
                 DarkPattern = ToBytes(ToArray("28 00 00 14 21 ? 00 ? 21 ? ?"), ToArray("20 06 00 37 E1 E3 01 91 E0 03 13")),
+            },
+            new()
+            {
+                // 2022.1.21(m1)
+                Version = "2022",
+                Architecture = ArchitectureType.MacOS_ARM64,
+                LightPattern = ToBytes(ToArray("14 68 68 38 14 05 00 34 41 ? 00 ? 21 ? ? 91"), ToArray("20 06 00 36 E1 E3 01 91 E0 03 13 AA 2F 0B")),
+                DarkPattern = ToBytes(ToArray("14 68 68 38 28 00 00 14 41 ? 00 ? 21 ? ? 91"), ToArray("20 06 00 37 E1 E3 01 91 E0 03 13 AA 2F 0B")),
             },
         };
 

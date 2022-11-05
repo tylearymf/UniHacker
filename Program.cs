@@ -33,10 +33,10 @@ namespace UniHacker
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
-            Console.WriteLine($"Start Search Pattern.");
+            Debug.WriteLine($"Start Search Pattern.");
 
             var filePath = "D:/Unity";
-            var version = "2018.1.15";
+            var version = "2022.1.21";
             var architecture = MachineArchitecture.GetArchitectureType(filePath);
             var patchInfo = UnityPatchInfos.FindPatchInfo(version, architecture);
             var fileBytes = File.ReadAllBytes(filePath);
@@ -44,7 +44,7 @@ namespace UniHacker
             var lightIndexes = BoyerMooreSearcher.FindPattern(patchInfo.LightPattern, fileBytes);
 
             stopwatch.Stop();
-            Console.WriteLine($"Search Pattern Finish. {stopwatch.ElapsedMilliseconds}");
+            Debug.WriteLine($"Search Pattern Finish. {stopwatch.ElapsedMilliseconds}");
 
             if (darkIndexes.Count == patchInfo.DarkPattern.Count)
                 Console.Beep();
