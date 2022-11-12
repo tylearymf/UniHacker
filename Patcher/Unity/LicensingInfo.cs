@@ -29,8 +29,12 @@ namespace UniHacker
                     break;
                 case PlatformType.Linux:
                     {
+#if DOCKER_ENV
+                        commonAppData = "/root/.local/share/unity3d";
+#else
                         var userName = await PlatformUtils.GetLinuxUserName();
                         commonAppData = $"/home/{userName}/.local/share/unity3d";
+#endif
 
                         if (!Directory.Exists(commonAppData))
                             Directory.CreateDirectory(commonAppData);

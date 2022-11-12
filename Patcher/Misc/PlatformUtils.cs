@@ -7,8 +7,10 @@ using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+#if !DOCKER_ENV
 using Avalonia;
 using Avalonia.Platform;
+#endif
 
 namespace UniHacker
 {
@@ -16,6 +18,7 @@ namespace UniHacker
     {
         public const string FontFamily = "Microsoft YaHei,Simsun,苹方-简,宋体-简";
 
+#if !DOCKER_ENV
         static Stream? s_IconStream;
         public static Stream IconStream
         {
@@ -32,6 +35,7 @@ namespace UniHacker
                 return s_IconStream;
             }
         }
+#endif
 
         public static bool IsAdministrator =>
             RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ?

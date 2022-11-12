@@ -1,13 +1,23 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+#if !DOCKER_ENV
 using Avalonia.Controls;
 using MessageBox.Avalonia.DTO;
 using MessageBox.Avalonia.Enums;
 using MessageBoxAvalonia = MessageBox.Avalonia;
+#endif
 
 namespace UniHacker
 {
     internal class MessageBox
     {
+#if DOCKER_ENV
+        public static Task Show(string message)
+        {
+            Console.WriteLine($"[UniHacker] {message}");
+            return Task.CompletedTask;
+        }
+#else
         static readonly MessageBoxStandardParams s_Params = new()
         {
             WindowIcon = new WindowIcon(PlatformUtils.IconStream),
@@ -32,5 +42,6 @@ namespace UniHacker
             else
                 return messageView.Show();
         }
+#endif
     }
 }

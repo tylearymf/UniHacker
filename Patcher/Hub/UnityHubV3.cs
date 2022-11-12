@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
+#if !DOCKER_ENV
 using MessageBoxAvalonia = MessageBox.Avalonia;
+#endif
 
 namespace UniHacker
 {
@@ -83,8 +85,10 @@ namespace UniHacker
 
         public static async Task<bool> Patch(string exportFolder)
         {
+#if !DOCKER_ENV
             var result = await MessageBox.Show(Language.GetString("Hub_Patch_Option_Login"), MessageBoxAvalonia.Enums.ButtonEnum.YesNo);
             if (result == MessageBoxAvalonia.Enums.ButtonResult.No)
+#endif
             {
                 var authServicePath = Path.Combine(exportFolder, "build/main/services/authService/AuthService.js");
                 var authServiceContent = File.ReadAllText(authServicePath);
@@ -100,8 +104,10 @@ namespace UniHacker
                 File.WriteAllText(cloudCorePath, cloudCoreContent);
             }
 
+#if !DOCKER_ENV
             result = await MessageBox.Show(Language.GetString("Hub_Patch_Option_DisableUpdate"), MessageBoxAvalonia.Enums.ButtonEnum.YesNo);
             if (result == MessageBoxAvalonia.Enums.ButtonResult.Yes)
+#endif
             {
                 var defaultLocalConfigPath = Path.Combine(exportFolder, "build/common/DefaultLocalConfig.js");
                 var defaultLocalConfigContent = File.ReadAllText(defaultLocalConfigPath);
