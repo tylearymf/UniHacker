@@ -18,6 +18,10 @@ Usage
 * If you still need to cooperate with Unity Hub, then also select Unity Hub.exe on the software, click PATCH, finally you can use with Unity Hub
 * Note: **Cracking Unity Hub.exe alone will not open the project, as cracking Unity.exe is the main thing**
 
+## Docker
+
+[unihacker-docker](https://github.com/tylearymf/unihacker-docker)
+
 ## Windows OS
 
 ### Supported Unity Versions

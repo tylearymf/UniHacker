@@ -35,6 +35,10 @@
 * 上面的地址下载时需要 **全程代理**，不然可能会出现时重定向为国内地址，具体在软件分析时会提示为 **国内特供版** 。
 * **国内特供版的是不支持破解的**。
 
+## Docker
+
+[unihacker-docker](https://github.com/tylearymf/unihacker-docker)
+
 ## Windows 系统
 
 ### 支持破解的Unity版本
