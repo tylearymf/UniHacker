@@ -167,7 +167,7 @@ https://www.github.com/tylearymf/UniHacker</value>
     <value>{0} is running and the patch may fail!</value>
   </data>
   <data name="Revert_btn" xml:space="preserve">
-    <value>Revert</value>
+    <value>Restore</value>
   </data>
   <data name="Revert_Desc" xml:space="preserve">
     <value>Do you need to remove the crack patch?</value>

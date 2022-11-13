@@ -85,7 +85,10 @@ namespace UniHacker
 
         public static async Task<bool> Patch(string exportFolder)
         {
-#if !DOCKER_ENV
+#if DOCKER_ENV
+            Program.TryGetEnvironmentVariable(Program.NEED_LOGIN, out var needLogin);
+            if (string.Compare(needLogin, bool.TrueString, true) == 0)
+#else
             var result = await MessageBox.Show(Language.GetString("Hub_Patch_Option_Login"), MessageBoxAvalonia.Enums.ButtonEnum.YesNo);
             if (result == MessageBoxAvalonia.Enums.ButtonResult.No)
 #endif
@@ -104,7 +107,10 @@ namespace UniHacker
                 File.WriteAllText(cloudCorePath, cloudCoreContent);
             }
 
-#if !DOCKER_ENV
+#if DOCKER_ENV
+            Program.TryGetEnvironmentVariable(Program.DISABLE_UPDATE, out var disableUpdate);
+            if (string.Compare(disableUpdate, bool.TrueString, true) == 0)
+#else
             result = await MessageBox.Show(Language.GetString("Hub_Patch_Option_DisableUpdate"), MessageBoxAvalonia.Enums.ButtonEnum.YesNo);
             if (result == MessageBoxAvalonia.Enums.ButtonResult.Yes)
 #endif
