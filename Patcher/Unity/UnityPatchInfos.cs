@@ -248,6 +248,13 @@ namespace UniHacker
             },
             new()
             {
+                // 2019.3.15
+                Version = "2019.3",
+                LightPattern = ToBytes(ToArray("? FF 80 B8 69 4C 00 00 00 74 5D"), ToArray("BB 02 00 00 00 45 84 E4 0F 84 3E 02")),
+                DarkPattern = ToBytes(ToArray("? FF 80 B8 69 4C 00 00 00 EB 5D"), ToArray("BB 02 00 00 00 45 84 E4 0F 85 3E 02")),
+            },
+            new()
+            {
                 // 2019.3.4
                 Version = "2019.3.4",
                 LightPattern = ToBytes(ToArray("02 73 FF 80 B8 69 4C 00 00 00 74 5D"), ToArray("FE BB 02 00 00 00 45 84 E4 0F 84 3E 02")),
@@ -262,7 +269,21 @@ namespace UniHacker
             },
             new()
             {
-                // 2019.3.15、2019.4.28、2019.4.35、2019.4.40、2019.4.39、2019.4.38、2019.4.37
+                // 2019.4.28
+                Version = "2019.4.28",
+                LightPattern = ToBytes(ToArray("6B FF 80 B8 69 4C 00 00 00 74 5D"), ToArray("BB 02 00 00 00 45 84 E4 0F 84 3E 02")),
+                DarkPattern = ToBytes(ToArray("6B FF 80 B8 69 4C 00 00 00 EB 5D"), ToArray("BB 02 00 00 00 45 84 E4 0F 85 3E 02")),
+            },
+            new()
+            {
+                // 2019.4.40、2019.4.39、2019.4.38、2019.4.37
+                Version = "2019.4.40 ; 2019.4.39 ; 2019.4.38 ; 2019.4.37",
+                LightPattern = ToBytes(ToArray("72 FF 80 B8 69 4C 00 00 00 74 5D"), ToArray("BB 02 00 00 00 45 84 FF 0F 84 2E")),
+                DarkPattern = ToBytes(ToArray("72 FF 80 B8 69 4C 00 00 00 EB 5D"), ToArray("BB 02 00 00 00 45 84 FF 0F 85 2E")),
+            },
+            new()
+            {
+                // 2019
                 Version = "2019",
                 LightPattern = ToBytes(ToArray("? FF 80 B8 69 4C 00 00 00 74 5D"), ToArray("FD BB 02 00 00 00 45 84 ? 0F 84 ? 02")),
                 DarkPattern = ToBytes(ToArray("? FF 80 B8 69 4C 00 00 00 EB 5D"), ToArray("FD BB 02 00 00 00 45 84 ? 0F 85 ? 02")),
