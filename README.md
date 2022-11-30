@@ -30,6 +30,14 @@
 * 如果还需要配合Unity Hub，那么也在软件上选择 Unity Hub.exe，点击破解，即可搭配Unity Hub一起使用
 * 注意：**只破解 Unity Hub.exe 是无法打开工程的，因为破解 Unity.exe 才是主要的**
 
+Unity Hub登录教程
+
+1. 删除本地缓存目录
+   * Windows：%AppData%/UnityHub（C:\Users\你的用户名\AppData\Roaming\UnityHub）
+2. 在[Proxifier](https://www.proxifier.com/)的规则设置中将UnityHub加入代理，需要配合梯子，具体网络搜索，这里不细说
+3. 打开UnityHub，点击Sign In，会跳转到 https://api.unity.com/v1/oauth2/...，注意这里是 .com是正确的，如果是 .cn的说明你的第二步操作有问题
+4. 注册个Unity国外账号（用邮箱注册就可以了，不需要手机号），然后登录好后会自动跳转会UnityHub，如果没反应，可以退出UnityHub再点击登录
+
 注意事项
 
 * 上面的地址下载时需要 **全程代理**，不然可能会出现时重定向为国内地址，具体在软件分析时会提示为 **国内特供版** 。
