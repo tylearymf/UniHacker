@@ -12,6 +12,8 @@
 
 **Patch all versions of Unity3D and UnityHub.**
 
+**Since Unity2022.2.0 and above have refactored the license logic, it is currently uncrackable. Question: [#78](https://github.com/tylearymf/UniHacker/issues/78)**
+
 Usage
 
 * After selecting the Unity.exe you want to crack on the software, click PATCH to use, then you can double-click Unity.exe to open the project. Submit issue if prompted not supported
