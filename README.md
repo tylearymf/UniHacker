@@ -12,6 +12,8 @@
 
 **支持破解所有国际版本的Unity和UnityHub。**
 
+**自从 Unity2022.2.0 及以上版本重构了License逻辑，目前无法破解。问题跳转：[#78](https://github.com/tylearymf/UniHacker/issues/78)**
+
 下载地址
 
 1. Unity国际版下载地址：https://unity3d.com/get-unity/download/archive
