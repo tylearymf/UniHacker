@@ -138,6 +138,11 @@ namespace UniHacker
             editorappContent = editorappContent.Replace("licensingSdk.getInstance().", "licensingSdk.getInstance()?.");
             File.WriteAllText(editorappPath, editorappContent);
 
+            var editorManagerPath = Path.Combine(exportFolder, "build/main/services/editorManager/editorManager.js");
+            var editorManagerContent = File.ReadAllText(editorManagerPath);
+            editorManagerContent = editorManagerContent.Replace("return this.validateEditorFile(location, skipSignatureCheck)", "return this.validateEditorFile(location, true)");
+            File.WriteAllText(editorManagerPath, editorManagerContent);
+
             return true;
         }
     }

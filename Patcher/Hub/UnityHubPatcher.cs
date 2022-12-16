@@ -72,6 +72,10 @@ namespace UniHacker
             {
                 patchResult = await UnityHubV3.Patch(exportFolder);
             }
+            else
+            {
+                patchResult = await UnityHubV3.Patch(exportFolder);
+            }
 
             var licensingFilePath = Path.Combine(RootPath, "Frameworks/LicensingClient/Unity.Licensing.Client" + PlatformUtils.GetExtension());
             if (File.Exists(licensingFilePath))
