@@ -197,9 +197,16 @@ namespace UniHacker
             new()
             {
                 // 2021.3.5、2021.3.6
-                Version = "2021.3",
+                Version = "2021.3.5 ; 2021.3.6",
                 LightPattern = ToBytes(ToArray("0F 84 9C 00 00 00 C7 44 24 20 24"), ToArray("75 14 B8 02 00 00 00 E9 66")),
                 DarkPattern = ToBytes(ToArray("E9 9D 00 00 00 00 C7 44 24 20 24"), ToArray("74 14 B8 02 00 00 00 E9 66")),
+            },
+            new()
+            {
+                // 2021.3.19
+                Version = "2021.3",
+                LightPattern = ToBytes(ToArray("0F 84 A4 00 00 00 C7 44 24 20 25"), ToArray("75 14 B8 02 00 00 00 E9 66")),
+                DarkPattern = ToBytes(ToArray("0F 85 A4 00 00 00 C7 44 24 20 25"), ToArray("74 14 B8 02 00 00 00 E9 66")),
             },
             new()
             {
@@ -319,9 +326,16 @@ namespace UniHacker
             new()
             {
                 //2021.3.6
-                Version = "2021.3",
+                Version = "2021.3.6",
                 LightPattern = ToBytes(ToArray("B0 A1 64 00 00 45 84 F6 74 66 48 8D 35"), ToArray("00 41 BF 02 00 00 00 84 C0 0F 84 3E")),
                 DarkPattern = ToBytes(ToArray("B0 A1 64 00 00 45 84 F6 EB 66 48 8D 35"), ToArray("00 41 BF 02 00 00 00 84 C0 0F 85 3E")),
+            },
+            new()
+            {
+                //2021.3.19
+                Version = "2021.3",
+                LightPattern = ToBytes(ToArray("8A B0 A1 64 00 00 45 84 F6 0F 84 A6"), ToArray("2A 00 00 41 BF 02 00 00 00 84 C0 0F 84")),
+                DarkPattern = ToBytes(ToArray("8A B0 A1 64 00 00 45 84 F6 E9 A7 00"), ToArray("2A 00 00 41 BF 02 00 00 00 84 C0 0F 85")),
             },
             new()
             {
@@ -407,10 +421,18 @@ namespace UniHacker
             new()
             {
                 // 2021.3.12(m1)
-                Version = "2021.3",
+                Version = "2021.3.12",
                 Architecture = ArchitectureType.MacOS_ARM64,
                 LightPattern = ToBytes(ToArray("14 68 68 38 F4 02 00 34 ? ? 00 ? 21 ? ? 91"), ToArray("20 06 00 36 E1 E3 01 91 E0 03 13 AA 2F 0B")),
                 DarkPattern = ToBytes(ToArray("14 68 68 38 17 00 00 14 ? ? 00 ? 21 ? ? 91"), ToArray("20 06 00 37 E1 E3 01 91 E0 03 13 AA 2F 0B")),
+            },
+            new()
+            {
+                // 2021.3.19(m1)
+                Version = "2021.3",
+                Architecture = ArchitectureType.MacOS_ARM64,
+                LightPattern = ToBytes(ToArray("14 68 68 38 14 05 00 34 41 D3 00 90 21 60"), ToArray("20 06 00 36 E1 E3 01 91 E0 03 13 AA 2F 0B")),
+                DarkPattern = ToBytes(ToArray("14 68 68 38 28 00 00 14 41 D3 00 90 21 60"), ToArray("20 06 00 37 E1 E3 01 91 E0 03 13 AA 2F 0B")),
             },
             new()
             {
