@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
@@ -303,6 +304,30 @@ namespace UniHacker
             }
 
             return string.Empty;
+        }
+
+        public static long ConvertToVersionID(string version, VersionFlag flag = VersionFlag.None)
+        {
+            var splits = version.Split('.').ToList();
+            while (splits.Count > 3)
+                splits.RemoveAt(splits.Count - 1);
+
+            while (splits.Count < 3)
+                splits.Add(string.Empty);
+
+            var str = $"{splits[0].PadLeft(4, '0')}{splits[1].PadLeft(3, '0')}{splits[2].PadLeft(3, '0')}";
+            if (long.TryParse(str, out var id))
+                id += (int)flag * (long)Math.Pow(10, 11);
+
+            return id;
+        }
+
+        public static VersionFlag GetVersionFlag(string v)
+        {
+            if (v?.EndsWith("b") ?? false)
+                return VersionFlag.Beta;
+
+            return VersionFlag.None;
         }
     }
 
