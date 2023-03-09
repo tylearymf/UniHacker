@@ -26,8 +26,10 @@
     <None Remove="publish\**" />
     <None Remove=".gitignore" />
     <None Remove="build.bat" />
+    <None Remove="global.json" />
     <None Remove="LICENSE" />
     <None Remove="README.md" />
+    <None Remove="README_EN.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\avalonia-logo.ico" />
