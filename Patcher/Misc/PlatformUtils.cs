@@ -222,6 +222,17 @@ namespace UniHacker
 
         public static string TryGetVersionOfUnity(string filePath)
         {
+            var architectureType = MachineArchitecture.GetArchitectureType(filePath);
+            switch (GetPlatformTypeByArch(architectureType))
+            {
+                case PlatformType.Windows:
+                    var info = FileVersionInfo.GetVersionInfo(filePath);
+                    var version = info?.ProductVersion;
+                    if (!string.IsNullOrEmpty(version))
+                        return version;
+                    break;
+            }
+
             var maxLength = 40;
             var fileBytes = File.ReadAllBytes(filePath);
 
@@ -306,6 +317,16 @@ namespace UniHacker
             return string.Empty;
         }
 
+        // flag{1} + major{4} + minor{3} + build{3}
+        // flag = none : 0 2021 003 019
+        // flag = beta : 1 2021 003 019
+        const int FlagWidth = 1;
+        const int MajorWidth = 4;
+        const int MinorWidth = 3;
+        const int BuildWidth = 3;
+        const int VersionWidth = MajorWidth + MinorWidth + BuildWidth;
+        const int TotalVersionWidth = FlagWidth + VersionWidth;
+
         public static long ConvertToVersionID(string version, VersionFlag flag = VersionFlag.None)
         {
             var splits = version.Split('.').ToList();
@@ -315,16 +336,32 @@ namespace UniHacker
             while (splits.Count < 3)
                 splits.Add(string.Empty);
 
-            var str = $"{splits[0].PadLeft(4, '0')}{splits[1].PadLeft(3, '0')}{splits[2].PadLeft(3, '0')}";
+            var str = $"{splits[0].PadLeft(MajorWidth, '0')}{splits[1].PadLeft(MinorWidth, '0')}{splits[2].PadLeft(BuildWidth, '0')}";
             if (long.TryParse(str, out var id))
-                id += (int)flag * (long)Math.Pow(10, 11);
+                id += (int)flag * (long)Math.Pow(10, TotalVersionWidth);
 
             return id;
         }
 
-        public static VersionFlag GetVersionFlag(string v)
+        public static bool IsMajorEquals(long v1, long v2)
         {
-            if (v?.EndsWith("b") ?? false)
+            var str1 = v1.ToString().PadLeft(TotalVersionWidth, '0');
+            var str2 = v2.ToString().PadLeft(TotalVersionWidth, '0');
+
+            str1 = str1.Substring(0, FlagWidth + MajorWidth);
+            str2 = str2.Substring(0, FlagWidth + MajorWidth);
+            return str1 == str2;
+        }
+
+        public static long GetMajorRevision(string version, VersionFlag flag = VersionFlag.None)
+        {
+            var splits = version.Split('.');
+            return ConvertToVersionID(splits.Length > 0 ? splits[0] : string.Empty);
+        }
+
+        public static VersionFlag GetVersionFlag(string version)
+        {
+            if (Regex.IsMatch(version, @"^\d+(\.\d+)?(\.\d+)?b", RegexOptions.Multiline))
                 return VersionFlag.Beta;
 
             return VersionFlag.None;
