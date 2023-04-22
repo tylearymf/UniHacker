@@ -219,7 +219,9 @@ namespace UniHacker
         {
             try
             {
-                var attrStartInfo = new ProcessStartInfo("xattr", $"-rds com.apple.quarantine \"{appPath}\"");
+                // xattr -> /usr/bin/xattr
+                // https://github.com/tylearymf/UniHacker/issues/173
+                var attrStartInfo = new ProcessStartInfo("/usr/bin/xattr", $"-rds com.apple.quarantine \"{appPath}\"");
                 var attrProcess = Process.Start(attrStartInfo);
                 await attrProcess!.WaitForExitAsync();
                 return attrProcess.ExitCode == 0;
