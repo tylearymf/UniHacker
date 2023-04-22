@@ -239,15 +239,6 @@ namespace UniHacker
             },
             new()
             {
-// 2021.3.22(silicon)
-                Version = "2021.3.22",
-                Architecture = ArchitectureType.MacOS_ARM64,
-                LightPattern = ToBytes(ToArray("14 68 68 38 14 05 00 34"), ToArray("20 06 00 36 E1 E3 01 91 E0 03 13 AA 2F 0B")),
-                DarkPattern = ToBytes(ToArray("14 68 68 38 28 00 00 14"), ToArray("20 06 00 37 E1 E3 01 91 E0 03 13 AA 2F 0B")),
-            },
-            
-            new()
-            {
                 Version = "5.6.6 ; 5.6.7",
                 LightPattern = ToBytes("84 CC 00 00 00 49 8B 37 E8 40 63 00 00 BB 0C"),
                 DarkPattern = ToBytes("85 CC 00 00 00 49 8B 37 E8 40 63 00 00 BB 0C"),
@@ -434,6 +425,13 @@ namespace UniHacker
                 Architecture = ArchitectureType.MacOS_ARM64,
                 LightPattern = ToBytes(ToArray("14 68 68 38 14 05 00 34 41 D3 00 90 21 60"), ToArray("20 06 00 36 E1 E3 01 91 E0 03 13 AA 2F 0B")),
                 DarkPattern = ToBytes(ToArray("14 68 68 38 28 00 00 14 41 D3 00 90 21 60"), ToArray("20 06 00 37 E1 E3 01 91 E0 03 13 AA 2F 0B")),
+            },
+            new()
+            {
+                Version = "2021.3.21",
+                Architecture = ArchitectureType.MacOS_ARM64,
+                LightPattern = ToBytes(ToArray("14 68 68 38 14 05 00 34"), ToArray("20 06 00 36 E1 E3 01 91 E0 03 13 AA 2F 0B")),
+                DarkPattern = ToBytes(ToArray("14 68 68 38 28 00 00 14"), ToArray("20 06 00 37 E1 E3 01 91 E0 03 13 AA 2F 0B")),
             },
             new()
             {

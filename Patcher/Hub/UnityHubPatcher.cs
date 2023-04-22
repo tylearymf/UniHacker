@@ -10,17 +10,7 @@ namespace UniHacker
     {
         public UnityHubPatcher(string filePath) : base(filePath)
         {
-            PatchStatus = PatchStatus.NotSupport;
-
-            var fileVersion = FileVersion;
-            if (fileVersion.StartsWith("2."))
-            {
-                PatchStatus = PatchStatus.Support;
-            }
-            else if (fileVersion.StartsWith("3."))
-            {
-                PatchStatus = PatchStatus.Support;
-            }
+            PatchStatus = MajorVersion >= 2 ? PatchStatus.Support : PatchStatus.NotSupport;
 
             var unityHubPath = RootPath;
             unityHubPath = Path.Combine(unityHubPath, "resources");
@@ -61,20 +51,18 @@ namespace UniHacker
                     File.Move(Path.Combine(exportFolder, "filespackage.json"), Path.Combine(exportFolder, "package.json"));
             }
 
-            var fileVersion = FileVersion;
             var patchResult = false;
-
-            if (fileVersion.StartsWith("2."))
+            if (Version >= new Version("3.4.2"))
+            {
+                patchResult = await UnityHubV3_4_2.Patch(exportFolder);
+            }
+            else if (MajorVersion == 3)
+            {
+                patchResult = await UnityHubV3.Patch(exportFolder);
+            }
+            else if (MajorVersion == 2)
             {
                 patchResult = UnityHubV2.Patch(exportFolder);
-            }
-            else if (fileVersion.StartsWith("3."))
-            {
-                patchResult = await UnityHubV3.Patch(exportFolder);
-            }
-            else
-            {
-                patchResult = await UnityHubV3.Patch(exportFolder);
             }
 
             var licensingFilePath = Path.Combine(RootPath, "Frameworks/LicensingClient/Unity.Licensing.Client" + PlatformUtils.GetExtension());

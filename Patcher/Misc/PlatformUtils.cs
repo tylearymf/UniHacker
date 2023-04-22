@@ -121,13 +121,14 @@ namespace UniHacker
             return (rootPath, realFilePath);
         }
 
-        public static (string fileVersion, int majorVersion, int minorVersion) GetFileVersionInfo(string filePath, ArchitectureType architectureType)
+        public static (string fileVersion, int majorVersion, int minorVersion, int buildVersion) GetFileVersionInfo(string filePath, ArchitectureType architectureType)
         {
             var fileName = Path.GetFileNameWithoutExtension(filePath);
             var rootPath = Path.GetDirectoryName(filePath);
             var fileVersion = string.Empty;
             var majorVersion = 0;
             var minorVersion = 0;
+            var buildVersion = 0;
 
             switch (GetPlatformTypeByArch(architectureType))
             {
@@ -136,7 +137,8 @@ namespace UniHacker
                     fileVersion = !string.IsNullOrEmpty(info.ProductVersion) ? info.ProductVersion.Split('_')[0] : Language.GetString(PatchStatus.Unknown.ToString());
                     majorVersion = info.ProductMajorPart;
                     minorVersion = info.ProductMinorPart;
-                    return (fileVersion, majorVersion, minorVersion);
+                    buildVersion = info.ProductBuildPart;
+                    return (fileVersion, majorVersion, minorVersion, buildVersion);
                 case PlatformType.MacOS:
                     rootPath = Path.Combine(filePath, "Contents");
                     var plistFile = Path.Combine(rootPath, $"Info.plist");
@@ -145,10 +147,8 @@ namespace UniHacker
                     if (match.Success)
                     {
                         fileVersion = match.Groups["version"].Value;
-                        var versions = fileVersion.Split('.');
-                        _ = int.TryParse(versions[0], out majorVersion);
-                        _ = int.TryParse(versions[1], out minorVersion);
-                        return (fileVersion, majorVersion, minorVersion);
+                        ParseVersionStr(fileVersion, ref majorVersion, ref minorVersion, ref buildVersion);
+                        return (fileVersion, majorVersion, minorVersion, buildVersion);
                     }
                     break;
                 case PlatformType.Linux:
@@ -169,10 +169,8 @@ namespace UniHacker
                             if (infoMatch.Success)
                             {
                                 fileVersion = infoMatch.Groups["version"].Value;
-                                var versions = fileVersion.Split('.');
-                                _ = int.TryParse(versions[0], out majorVersion);
-                                _ = int.TryParse(versions[1], out minorVersion);
-                                return (fileVersion, majorVersion, minorVersion);
+                                ParseVersionStr(fileVersion, ref majorVersion, ref minorVersion, ref buildVersion);
+                                return (fileVersion, majorVersion, minorVersion, buildVersion);
                             }
                             else
                             {
@@ -189,10 +187,8 @@ namespace UniHacker
                         fileVersion = TryGetVersionOfUnity(filePath);
                         if (!string.IsNullOrEmpty(fileVersion))
                         {
-                            var versions = fileVersion.Split('.');
-                            _ = int.TryParse(versions[0], out majorVersion);
-                            _ = int.TryParse(versions[1], out minorVersion);
-                            return (fileVersion, majorVersion, minorVersion);
+                            ParseVersionStr(fileVersion, ref majorVersion, ref minorVersion, ref buildVersion);
+                            return (fileVersion, majorVersion, minorVersion, buildVersion);
                         }
                         else
                         {
@@ -202,7 +198,21 @@ namespace UniHacker
                     break;
             }
 
-            return (fileVersion, majorVersion, minorVersion);
+            return (fileVersion, majorVersion, minorVersion, buildVersion);
+        }
+
+        public static void ParseVersionStr(string version, ref int major, ref int minor, ref int build)
+        {
+            if (string.IsNullOrEmpty(version))
+                return;
+
+            var splits = version.Split('.');
+            if (splits.Length > 0)
+                int.TryParse(splits[0], out major);
+            if (splits.Length > 1)
+                int.TryParse(splits[1], out minor);
+            if (splits.Length > 2)
+                int.TryParse(splits[2], out build);
         }
 
         public static async Task<bool> MacOSRemoveQuarantine(string appPath)

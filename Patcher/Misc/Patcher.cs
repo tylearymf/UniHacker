@@ -21,6 +21,10 @@ namespace UniHacker
 
         public int MinorVersion { protected set; get; }
 
+        public int BuildVersion { protected set; get; }
+
+        public Version Version { protected set; get; }
+
 
         public Patcher(string filePath)
         {
@@ -30,7 +34,8 @@ namespace UniHacker
             FilePath = realFilePath;
             RootPath = rootPath;
             ArchitectureType = MachineArchitecture.GetArchitectureType(realFilePath);
-            (FileVersion, MajorVersion, MinorVersion) = PlatformUtils.GetFileVersionInfo(filePath, ArchitectureType);
+            (FileVersion, MajorVersion, MinorVersion, BuildVersion) = PlatformUtils.GetFileVersionInfo(filePath, ArchitectureType);
+            Version = new Version(MajorVersion, MinorVersion, BuildVersion);
             PatchStatus = PatchStatus.Unknown;
             if (this is not DefaultPatcher)
             {
